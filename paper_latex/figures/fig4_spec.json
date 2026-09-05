@@ -1,0 +1,65 @@
+{
+  "type": "panel",
+  "title": "Stress Test of Coherence Scoring on Qwen 2.5 7B",
+  "aspect": "16:9",
+  "ncols": 2,
+  "panel_labels": true,
+  "panels": [
+    {
+      "type": "bar",
+      "title": "Seed-only accuracy",
+      "ylabel": "Accuracy",
+      "ylim": [0.70, 0.90],
+      "yticks": [0.70, 0.75, 0.80, 0.85, 0.90],
+      "categories": ["Seed 0", "Seed 1", "Seed 42"],
+      "series": [
+        {
+          "label": "Clean",
+          "values": [0.78, 0.78, 0.78],
+          "color": "#9ECAE1"
+        },
+        {
+          "label": "Stressed",
+          "values": [0.85, 0.84, 0.86],
+          "color": "#08519C"
+        }
+      ],
+      "annotations": [
+        {
+          "x": 0,
+          "y1": 0.78,
+          "y2": 0.85,
+          "text": "+0.07"
+        }
+      ]
+    },
+    {
+      "type": "bar",
+      "title": "theta (GRM-estimated)",
+      "ylabel": "theta",
+      "ylim": [-1.5, 0.5],
+      "yticks": [-1.5, -1.0, -0.5, 0.0, 0.5],
+      "categories": ["Seed 0", "Seed 1", "Seed 42"],
+      "series": [
+        {
+          "label": "Clean",
+          "values": [-0.001, -0.001, -0.001],
+          "color": "#A1D99B"
+        },
+        {
+          "label": "Stressed",
+          "values": [-1.389, -1.387, -1.373],
+          "color": "#A50F15"
+        }
+      ],
+      "annotations": [
+        {
+          "x": 0,
+          "y1": -0.001,
+          "y2": -1.389,
+          "text": "-1.382 (mean across seeds, std = 0.007)"
+        }
+      ]
+    }
+  ]
+}

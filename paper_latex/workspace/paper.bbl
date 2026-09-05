@@ -1,0 +1,225 @@
+\begin{thebibliography}{25}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Li et~al.(2025)Li, Tang, Chen, Cheng, Metoyer, Hua, and
+  Chawla]{Li2025}
+Peiyu Li, Xiuxiu Tang, Si~Chen, Ying Cheng, Ronald Metoyer, T.~Hua, and
+  Nitesh~V. Chawla.
+\newblock Adaptive testing for llm evaluation: A psychometric alternative to
+  static benchmarks.
+\newblock \emph{ArXiv}, abs/2511.04689, 2025.
+\newblock \doi{10.48550/arXiv.2511.04689}.
+
+\bibitem[Xu et~al.(2024)Xu, Guan, Greene, and Kechadi]{Xu2024}
+Cheng Xu, Shuhao Guan, Derek Greene, and Mohand-Tahar Kechadi.
+\newblock Benchmark data contamination of large language models: A survey.
+\newblock \emph{ArXiv}, abs/2406.04244, 2024.
+\newblock \doi{10.48550/arXiv.2406.04244}.
+
+\bibitem[Cho et~al.(2025)Cho, Ruberto, and Terragni]{Cho2025}
+Steven Cho, Stefano Ruberto, and Valerio Terragni.
+\newblock Metamorphic testing of large language models for natural language
+  processing.
+\newblock In \emph{IEEE International Conference on Software Maintenance and
+  Evolution}, pages 174--186, 2025.
+\newblock \doi{10.1109/ICSME64153.2025.00025}.
+
+\bibitem[Han et~al.(2022)Han, Schoelkopf, Zhao, Qi, Riddell, Benson, Sun,
+  Zubova, Qiao, Burtell, Peng, Fan, Liu, Wong, Sailor, Ni, Nan, Kasai, Yu,
+  Zhang, Joty, Fabbri, Kryscinski, Lin, Xiong, and Radev]{Han2022}
+Simeng Han, Hailey Schoelkopf, Yilun Zhao, Zhenting Qi, Martin Riddell, Luke
+  Benson, Lucy Sun, E.~Zubova, Yujie Qiao, Matthew Burtell, David Peng,
+  Jonathan~A. Fan, Yixin Liu, Brian Wong, Malcolm Sailor, Ansong Ni, Linyong
+  Nan, Jungo Kasai, Tao Yu, Rui Zhang, Shafiq~R. Joty, Alexander~R. Fabbri,
+  Wojciech Kryscinski, Xi~Victoria Lin, Caiming Xiong, and Dragomir~R. Radev.
+\newblock Folio: Natural language reasoning with first-order logic.
+\newblock In \emph{Conference on Empirical Methods in Natural Language
+  Processing}, volume abs/2209.00840, 2022.
+\newblock \doi{10.48550/arXiv.2209.00840}.
+
+\bibitem[Liu et~al.(2024)Liu, Guo, Liang, Shareghi, Vulic, and
+  Collier]{Liu2024}
+Yinhong Liu, Zhijiang Guo, Tianya Liang, Ehsan Shareghi, Ivan Vulic, and Nigel
+  Collier.
+\newblock Aligning with logic: Measuring, evaluating and improving logical
+  preference consistency in large language models.
+\newblock 2024.
+
+\bibitem[Chen et~al.(2018)Chen, Kuo, Liu, Poon, Towey, Tse, and Zhou]{Chen2018}
+T.~Y. Chen, F.-C. Kuo, H.~Liu, P.-L. Poon, D.~Towey, T.~H. Tse, and Z.~Q. Zhou.
+\newblock Metamorphic testing: A review of challenges and opportunities.
+\newblock \emph{ACM Computing Surveys}, 51\penalty0 (1):\penalty0 1--27, 2018.
+\newblock \doi{10.1145/3143563}.
+
+\bibitem[Zhou et~al.(2025)Zhou, Huang, Zhao, Han, Wang, Chen, Yang, Bao, Dong,
+  Xu, Zhu, Cao, and Zhao]{Zhou2025}
+Hongli Zhou, Hui Huang, Ziqing Zhao, Lvyuan Han, Huichen~Will Wang, Kehai Chen,
+  Muyun Yang, Wei Bao, Jiangwen Dong, Bing Xu, Conghui Zhu, Hailong Cao, and
+  Tiejun Zhao.
+\newblock Lost in benchmarks? rethinking large language model benchmarking with
+  item response theory.
+\newblock In \emph{AAAI Conference on Artificial Intelligence}, pages
+  35085--35093, 2025.
+\newblock \doi{10.48550/arXiv.2505.15055}.
+
+\bibitem[Polo et~al.(2024)Polo, Weber, Choshen, Sun, Xu, and
+  Yurochkin]{Polo2024}
+Felipe~Maia Polo, Lucas Weber, Leshem Choshen, Yuekai Sun, Gongjun Xu, and
+  M.~Yurochkin.
+\newblock tinybenchmarks: evaluating llms with fewer examples.
+\newblock In \emph{International Conference on Machine Learning}, volume
+  abs/2402.14992, 2024.
+\newblock \doi{10.48550/arXiv.2402.14992}.
+
+\bibitem[Zhou et~al.(2026)Zhou, Li, Fang, Zhou, Li, and Zheng]{Zhou2026}
+Zenghui Zhou, Man Li, Xiaoke Fang, Xinyi Zhou, Weibin Li, and Zheng Zheng.
+\newblock Lgmt: Logic-grounded metamorphic testing for evaluating the reasoning
+  reliability of llms.
+\newblock \emph{ArXiv}, abs/2605.23965, 2026.
+\newblock \doi{10.1016/j.knosys.2026.116324}.
+
+\bibitem[Choi et~al.(2026)Choi, Park, Cho, Park, and Kim]{Choi2026}
+Junhyuk Choi, S.~Park, Chanhee Cho, Hyeonchu Park, and Bugeun Kim.
+\newblock Diagnosing the reliability of llm-as-a-judge via item response
+  theory.
+\newblock \emph{ArXiv}, abs/2602.00521, 2026.
+\newblock \doi{10.48550/arXiv.2602.00521}.
+
+\bibitem[Deng et~al.(2023)Deng, Zhao, Tang, Gerstein, and Cohan]{Deng2023}
+Chunyuan Deng, Yilun Zhao, Xiangru Tang, Mark~B. Gerstein, and Arman Cohan.
+\newblock Investigating data contamination in modern benchmarks for large
+  language models.
+\newblock In \emph{North American Chapter of the Association for Computational
+  Linguistics}, pages 8706--8719, 2023.
+\newblock \doi{10.48550/arXiv.2311.09783}.
+
+\bibitem[Jang et~al.(2022)Jang, Kwon, and Lukasiewicz]{Jang2022}
+Myeongjun Jang, D.~Kwon, and Thomas Lukasiewicz.
+\newblock Becel: Benchmark for consistency evaluation of language models.
+\newblock In \emph{International Conference on Computational Linguistics},
+  pages 3680--3696, 2022.
+
+\bibitem[Jang and Lukasiewicz(2023)]{Jang2023}
+Myeongjun Jang and Thomas Lukasiewicz.
+\newblock Consistency analysis of chatgpt.
+\newblock In \emph{Conference on Empirical Methods in Natural Language
+  Processing}, pages 15970--15985, 2023.
+\newblock \doi{10.48550/arXiv.2303.06273}.
+
+\bibitem[Cobbe et~al.(2021)Cobbe, Kosaraju, Bavarian, Chen, Jun, Kaiser,
+  Plappert, Tworek, Hilton, Nakano, Hesse, and Schulman]{Cobbe2021}
+K.~Cobbe, Vineet Kosaraju, Mo~Bavarian, Mark Chen, Heewoo Jun, Lukasz Kaiser,
+  Matthias Plappert, Jerry Tworek, Jacob Hilton, Reiichiro Nakano, Christopher
+  Hesse, and John Schulman.
+\newblock Training verifiers to solve math word problems.
+\newblock \emph{ArXiv}, abs/2110.14168, 2021.
+
+\bibitem[Zhang and Li(2026)]{Zhang2026}
+Yan Zhang and Shibo Li.
+\newblock Consistencygate: Preventing memory contamination in llm agents via
+  self-consistency admission control.
+\newblock 2026.
+
+\bibitem[White et~al.(2024)White, Dooley, Roberts, Pal, Feuer, Jain,
+  Shwartz-Ziv, Jain, Saifullah, Dey, Shubh-Agrawal, Sandha, Naidu, Hegde,
+  LeCun, Goldstein, Neiswanger, and Goldblum]{White2024}
+Colin White, Samuel Dooley, Manley Roberts, Arka Pal, Ben Feuer, Siddhartha
+  Jain, Ravid Shwartz-Ziv, Neel Jain, K.~Saifullah, Sreemanti Dey,
+  Shubh-Agrawal, S.~Sandha, Siddartha Naidu, Chinmay Hegde, Yann LeCun, Tom
+  Goldstein, Willie Neiswanger, and Micah Goldblum.
+\newblock Livebench: A challenging, contamination-limited llm benchmark.
+\newblock In \emph{International Conference on Learning Representations}, 2024.
+
+\bibitem[Liang et~al.(2022)Liang, Bommasani, Lee, Tsipras, Soylu, Yasunaga,
+  Zhang, Narayanan, Wu, Kumar, Newman, Yuan, Yan, Zhang, Cosgrove, Manning,
+  R{\'e}, Acosta-Navas, Hudson, Zelikman, Durmus, Ladhak, Rong, Ren, Yao, Wang,
+  Santhanam, Orr, Zheng, Y{\"u}ksekg{\"o}n{\"u}l, Suzgun, Kim, Guha, Chatterji,
+  Khattab, Henderson, Huang, Chi, Xie, Santurkar, Ganguli, Hashimoto, Icard,
+  Zhang, Chaudhary, Wang, Li, Mai, Zhang, and Koreeda]{Liang2022}
+Percy Liang, Rishi Bommasani, Tony Lee, Dimitris Tsipras, Dilara Soylu,
+  Michihiro Yasunaga, Yian Zhang, Deepak Narayanan, Yuhuai Wu, Ananya Kumar,
+  Benjamin Newman, Binhang Yuan, Bobby Yan, Ce~Zhang, Christian Cosgrove,
+  Christopher~D. Manning, Christopher R{\'e}, Diana Acosta-Navas, Drew~A.
+  Hudson, E.~Zelikman, Esin Durmus, Faisal Ladhak, Frieda Rong, Hongyu Ren,
+  Huaxiu Yao, Jue Wang, Keshav Santhanam, Laurel~J. Orr, Lucia Zheng, Mert
+  Y{\"u}ksekg{\"o}n{\"u}l, Mirac Suzgun, Nathan Kim, Neel Guha, Niladri~S.
+  Chatterji, O.~Khattab, Peter Henderson, Qian Huang, Ryan~A. Chi, S.~Xie,
+  Shibani Santurkar, Surya Ganguli, Tatsunori Hashimoto, Thomas Icard, Tianyi
+  Zhang, Vishrav Chaudhary, William Wang, Xuechen Li, Yifan Mai, Yuhui Zhang,
+  and Yuta Koreeda.
+\newblock Holistic evaluation of language models.
+\newblock \emph{ArXiv}, abs/2211.09110, 2022.
+\newblock \doi{10.48550/arXiv.2211.09110}.
+
+\bibitem[Parmar et~al.(2024)Parmar, Patel, Varshney, Nakamura, Luo, Mashetty,
+  Mitra, and Baral]{Parmar2024}
+Mihir Parmar, Nisarg Patel, Neeraj Varshney, Mutsumi Nakamura, Man Luo, Santosh
+  Mashetty, Arindam Mitra, and Chitta Baral.
+\newblock Logicbench: Towards systematic evaluation of logical reasoning
+  ability of large language models.
+\newblock In \emph{Annual Meeting of the Association for Computational
+  Linguistics}, pages 13679--13707, 2024.
+\newblock \doi{10.18653/v1/2024.acl-long.739}.
+
+\bibitem[Elazar et~al.(2021)Elazar, Kassner, Ravfogel, Ravichander, Hovy,
+  Sch{\"u}tze, and Goldberg]{Elazar2021}
+Yanai Elazar, Nora Kassner, Shauli Ravfogel, Abhilasha Ravichander, E.~Hovy,
+  Hinrich Sch{\"u}tze, and Yoav Goldberg.
+\newblock Measuring and improving consistency in pretrained language models.
+\newblock In \emph{Transactions of the Association for Computational
+  Linguistics}, volume~9, pages 1012--1031, 2021.
+\newblock \doi{10.1162/tacl_a_00410}.
+
+\bibitem[Musawi and Lu(2025)]{Musawi2025}
+Rahmatullah Musawi and Sheng Lu.
+\newblock Towards contamination resistant benchmarks.
+\newblock \emph{ArXiv}, abs/2505.08389, 2025.
+\newblock \doi{10.48550/arXiv.2505.08389}.
+
+\bibitem[Koncel-Kedziorski et~al.(2016)Koncel-Kedziorski, Roy, Amini, Kushman,
+  and Hajishirzi]{KoncelKedziorski2016}
+Rik Koncel-Kedziorski, Subhro Roy, Aida Amini, Nate Kushman, and Hannaneh
+  Hajishirzi.
+\newblock Mawps: A math word problem repository.
+\newblock In \emph{North American Chapter of the Association for Computational
+  Linguistics}, pages 1152--1157, 2016.
+\newblock \doi{10.18653/v1/N16-1136}.
+
+\bibitem[Saparov and He(2022)]{Saparov2022}
+Abulhair Saparov and He~He.
+\newblock Language models are greedy reasoners: A systematic formal analysis of
+  chain-of-thought.
+\newblock In \emph{International Conference on Learning Representations},
+  volume abs/2210.01240, 2022.
+\newblock \doi{10.48550/arXiv.2210.01240}.
+
+\bibitem[Samejima(1968)]{Samejima1968}
+F.~Samejima.
+\newblock Estimation of latent ability using a response pattern of graded
+  scores.
+\newblock \emph{Psychometrika}, 34:\penalty0 1--97, 1968.
+\newblock \doi{10.1002/J.2333-8504.1968.TB00153.X}.
+
+\bibitem[Balloccu et~al.(2024)Balloccu, Schmidtov{\'a}, Lango, and
+  Dusek]{Balloccu2024}
+Simone Balloccu, Patr{\'i}cia Schmidtov{\'a}, Mateusz Lango, and Ondrej Dusek.
+\newblock Leak, cheat, repeat: Data contamination and evaluation malpractices
+  in closed-source llms.
+\newblock In \emph{Conference of the European Chapter of the Association for
+  Computational Linguistics}, volume abs/2402.03927, 2024.
+\newblock \doi{10.48550/arXiv.2402.03927}.
+
+\bibitem[Novikova et~al.(2025)Novikova, Anderson, Blili-Hamelin, and
+  Majumdar]{Novikova2025}
+Jekaterina Novikova, C.~Anderson, Borhane Blili-Hamelin, and Subhabrata
+  Majumdar.
+\newblock Consistency in language models: Current landscape, challenges, and
+  future directions.
+\newblock \emph{ArXiv}, abs/2505.00268, 2025.
+\newblock \doi{10.48550/arXiv.2505.00268}.
+
+\end{thebibliography}

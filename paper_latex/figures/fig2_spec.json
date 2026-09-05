@@ -1,0 +1,52 @@
+{
+  "type": "scatter_theta_mmlu",
+  "title": "theta vs MMLU",
+  "caption": "GRM-estimated theta versus published MMLU accuracy for n = 5 LLMs. Pearson r = 0.975, Spearman rho = 0.90, Kendall tau = 0.80. The single rank inversion (Mistral Small 24B and Qwen 2.5 7B are swapped) bounds the rank statistics at this sample size.",
+  "xlabel": "theta (GRM-estimated latent ability)",
+  "ylabel": "MMLU accuracy",
+  "xlim": [-2.0, 4.0],
+  "ylim": [0.60, 0.85],
+  "aspect": "4:3",
+  "points": [
+    {"name": "GPT-4o-mini",        "x":  3.69, "y": 0.820},
+    {"name": "Claude Haiku 4.5",   "x":  3.56, "y": 0.801},
+    {"name": "Qwen 2.5 7B",        "x":  0.07, "y": 0.707},
+    {"name": "Mistral Small 24B",  "x": -0.28, "y": 0.732},
+    {"name": "Llama 3.1 8B",       "x": -1.37, "y": 0.684}
+  ],
+  "rank_inversion": {
+    "from": {"name": "Mistral Small 24B", "x": -0.28, "y": 0.732},
+    "to":   {"name": "Qwen 2.5 7B",       "x":  0.07, "y": 0.707}
+  },
+  "annotation": {
+    "lines": [
+      "Pearson r = 0.975",
+      "Spearman rho = 0.90 (one rank inversion)"
+    ],
+    "loc": "upper right"
+  },
+  "marker": {
+    "diameter_px": 12,
+    "facecolor": "#1f77b4",
+    "edgecolor": "black",
+    "linewidth": 1.0
+  },
+  "arrow": {
+    "linestyle": "--",
+    "color": "grey",
+    "linewidth": 1.2
+  },
+  "grid": {
+    "x_step": 1.0,
+    "y_step": 0.05,
+    "color": "#CCCCCC",
+    "linewidth": 0.6,
+    "alpha": 0.6
+  },
+  "statistics": {
+    "pearson_r": 0.975,
+    "spearman_rho": 0.90,
+    "kendall_tau": 0.80,
+    "n": 5
+  }
+}
