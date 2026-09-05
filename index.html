@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>M-IRT: Reference-Free LLM Evaluation via Samejima Graded Response Models on Dynamically Generated Metamorphic Item Clusters</title>
+<meta name="description" content="A reference-free LLM evaluation framework: dynamically generated Metamorphic Item Clusters scored by a Samejima Graded Response Model, correlating with MMLU at Pearson r = 0.975 on five public LLMs.">
+<style>
+  :root {
+    --bg: #fbfaf8;
+    --surface: #ffffff;
+    --ink: #1a1a1a;
+    --ink-2: #4a4a4a;
+    --ink-3: #6e6e6e;
+    --rule: #e6e2da;
+    --rule-strong: #c9c4b8;
+    --accent: #8a2a2a;
+    --accent-soft: #f4e8e8;
+    --code-bg: #f3efe6;
+    --measure: 68ch;
+    --gutter: 1.5rem;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    font-size: 17px;
+    line-height: 1.62;
+    font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    text-decoration-thickness: 1px;
+  }
+  a:hover { text-decoration-thickness: 2px; }
+  a:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+  .skip {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    background: var(--ink);
+    color: var(--bg);
+    padding: 0.6rem 1rem;
+    z-index: 1000;
+  }
+  .skip:focus { left: 0.5rem; top: 0.5rem; }
+
+  /* Top bar with byline + nav */
+  .topbar {
+    border-bottom: 1px solid var(--rule);
+    background: var(--bg);
+  }
+  .topbar-inner {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0.9rem var(--gutter);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 1.4rem;
+  }
+  .brand {
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .brand .brand-mark {
+    display: inline-block;
+    padding: 0.05em 0.4em;
+    background: var(--ink);
+    color: var(--bg);
+    border-radius: 3px;
+    margin-right: 0.45em;
+    font-variant-numeric: tabular-nums;
+  }
+  nav.toc {
+    margin-left: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 1.1rem;
+    font-size: 14px;
+  }
+  nav.toc a {
+    color: var(--ink-2);
+    text-decoration: none;
+    padding: 0.15rem 0;
+    border-bottom: 1px solid transparent;
+  }
+  nav.toc a:hover { color: var(--ink); border-bottom-color: var(--rule-strong); }
+  nav.toc a.is-active { color: var(--ink); border-bottom-color: var(--accent); }
+
+  /* Main column */
+  main {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding: 2.4rem var(--gutter) 4rem;
+  }
+  section { margin: 3.4rem 0; }
+  section:first-of-type { margin-top: 0.4rem; }
+
+  h1 {
+    font-size: clamp(1.9rem, 1.4rem + 2vw, 2.6rem);
+    line-height: 1.18;
+    letter-spacing: -0.02em;
+    margin: 0 0 0.4rem;
+    font-weight: 700;
+  }
+  h2 {
+    font-size: clamp(1.35rem, 1.1rem + 0.7vw, 1.65rem);
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    margin: 0 0 0.8rem;
+    font-weight: 700;
+  }
+  h3 {
+    font-size: 1.05rem;
+    line-height: 1.3;
+    margin: 0 0 0.4rem;
+    font-weight: 600;
+    letter-spacing: 0.005em;
+  }
+  p { margin: 0 0 1rem; }
+  p.lede {
+    font-size: 1.12rem;
+    line-height: 1.55;
+    color: var(--ink);
+  }
+  .eyebrow {
+    display: inline-block;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-bottom: 0.6rem;
+    font-weight: 600;
+  }
+
+  .byline {
+    color: var(--ink-2);
+    font-size: 0.95rem;
+    margin: 0.4rem 0 1.6rem;
+  }
+  .byline .sep { color: var(--ink-3); margin: 0 0.4em; }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem 1rem;
+    margin: 1.4rem 0 0;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.5em;
+    padding: 0.55em 0.95em;
+    border: 1px solid var(--ink);
+    border-radius: 3px;
+    text-decoration: none;
+    font-size: 0.95rem;
+    color: var(--ink);
+    background: var(--surface);
+  }
+  .btn:hover { background: var(--ink); color: var(--bg); }
+  .btn .arrow { font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; }
+
+  /* Contribution cards */
+  .cards {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 760px) {
+    .cards { grid-template-columns: 1fr 1fr 1fr; }
+  }
+  .card {
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 1.1rem 1.1rem 1.05rem;
+    background: var(--surface);
+  }
+  .card h3 { color: var(--ink); }
+  .card .tag {
+    display: inline-block;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+  }
+  .card p { margin: 0; color: var(--ink-2); font-size: 0.96rem; }
+
+  /* Method: numbered steps */
+  ol.steps {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    counter-reset: step;
+  }
+  ol.steps > li {
+    counter-increment: step;
+    border-top: 1px solid var(--rule);
+    padding: 1.1rem 0 1.1rem 3.4rem;
+    position: relative;
+  }
+  ol.steps > li:first-child { border-top: 0; padding-top: 0.4rem; }
+  ol.steps > li::before {
+    content: counter(step);
+    position: absolute;
+    left: 0;
+    top: 1.05rem;
+    width: 2.4rem;
+    height: 2.4rem;
+    line-height: 2.4rem;
+    text-align: center;
+    font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+    font-size: 0.95rem;
+    color: var(--ink-2);
+    border: 1px solid var(--rule-strong);
+    border-radius: 50%;
+    background: var(--surface);
+  }
+  ol.steps > li:first-child::before { top: 0.35rem; }
+  ol.steps h3 { margin-bottom: 0.35rem; }
+  ol.steps p { margin: 0.25rem 0 0; color: var(--ink-2); }
+  ol.steps p + p { margin-top: 0.6rem; }
+
+  /* Tables */
+  .tablewrap {
+    overflow-x: auto;
+    margin: 1.2rem 0 1.4rem;
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    background: var(--surface);
+    -webkit-overflow-scrolling: touch;
+    max-width: 100%;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-variant-numeric: tabular-nums;
+    font-size: 0.95rem;
+    table-layout: auto;
+  }
+  table.dense { font-size: 0.86rem; }
+  table.dense thead th, table.dense tbody td { padding: 0.45rem 0.55rem; }
+  table.dense tbody td:first-child { font-size: 0.78rem; }
+  caption {
+    text-align: left;
+    padding: 0.7rem 1rem;
+    font-size: 0.85rem;
+    color: var(--ink-3);
+    background: var(--bg);
+    border-bottom: 1px solid var(--rule);
+    caption-side: top;
+  }
+  thead th {
+    text-align: right;
+    font-weight: 600;
+    color: var(--ink-2);
+    padding: 0.55rem 0.75rem;
+    border-bottom: 1px solid var(--rule-strong);
+    background: var(--surface);
+    font-size: 0.85rem;
+    letter-spacing: 0.01em;
+  }
+  thead th:first-child { text-align: left; }
+  tbody td {
+    text-align: right;
+    padding: 0.5rem 0.75rem;
+    border-bottom: 1px solid var(--rule);
+    color: var(--ink);
+  }
+  tbody td:first-child { text-align: left; color: var(--ink-2); font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; font-size: 0.86rem; }
+  tbody tr:last-child td { border-bottom: 0; }
+  tbody tr.highlight td { background: var(--accent-soft); color: var(--ink); }
+  tbody tr.highlight td:first-child { color: var(--ink); font-weight: 600; }
+  th .unit, td .unit { color: var(--ink-3); font-weight: 400; font-size: 0.85em; }
+
+  /* Stats highlight cards (results) */
+  .stats {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 1fr;
+    margin: 1.2rem 0 0;
+  }
+  @media (min-width: 640px) { .stats { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 920px) { .stats { grid-template-columns: 1fr 1fr 1fr; } }
+  .stat {
+    border-top: 2px solid var(--ink);
+    padding: 0.9rem 0 0.4rem;
+  }
+  .stat .num {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+  }
+  .stat .num .small { font-size: 1.3rem; font-weight: 600; color: var(--ink-2); }
+  .stat .lbl {
+    margin-top: 0.4rem;
+    font-size: 0.88rem;
+    color: var(--ink-2);
+    line-height: 1.4;
+  }
+  .stat .src {
+    display: block;
+    margin-top: 0.5rem;
+    font-size: 0.78rem;
+    color: var(--ink-3);
+  }
+
+  /* Figure gallery */
+  .gallery {
+    display: grid;
+    gap: 2.2rem;
+    margin-top: 1.4rem;
+  }
+  figure {
+    margin: 0;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  figure .frame {
+    background: var(--surface);
+    padding: 0.6rem;
+    display: block;
+  }
+  figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 0;
+  }
+  figure .cap {
+    padding: 0.85rem 1rem 1rem;
+    border-top: 1px solid var(--rule);
+    color: var(--ink-2);
+    font-size: 0.92rem;
+    line-height: 1.5;
+  }
+  figure .cap strong { color: var(--ink); }
+  .thumb-btn {
+    display: block;
+    width: 100%;
+    background: transparent;
+    border: 0;
+    padding: 0;
+    cursor: zoom-in;
+    text-align: left;
+  }
+  .thumb-btn:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: -2px;
+  }
+  .zoomhint {
+    display: inline-block;
+    margin-top: 0.4rem;
+    font-size: 0.78rem;
+    color: var(--ink-3);
+  }
+
+  /* Limitations */
+  .limits ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .limits li {
+    border-top: 1px solid var(--rule);
+    padding: 1rem 0 1rem 1.8rem;
+    position: relative;
+  }
+  .limits li:first-child { border-top: 0; }
+  .limits li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 1.45rem;
+    width: 0.8rem;
+    height: 1px;
+    background: var(--ink-3);
+  }
+  .limits li:first-child::before { top: 0.45rem; }
+  .limits h3 { margin-bottom: 0.3rem; }
+  .limits p { margin: 0; color: var(--ink-2); }
+
+  /* Footer */
+  footer {
+    border-top: 1px solid var(--rule);
+    background: var(--bg);
+    color: var(--ink-2);
+    padding: 2.2rem var(--gutter);
+    margin-top: 4rem;
+  }
+  .foot-inner {
+    max-width: 1180px;
+    margin: 0 auto;
+    display: grid;
+    gap: 1.4rem;
+    grid-template-columns: 1fr;
+    font-size: 0.9rem;
+  }
+  @media (min-width: 760px) {
+    .foot-inner { grid-template-columns: 1.5fr 1fr 1fr; }
+  }
+  .foot-inner h4 {
+    margin: 0 0 0.4rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    font-weight: 600;
+  }
+  .foot-inner a { color: var(--ink); }
+  .foot-inner ul { list-style: none; padding: 0; margin: 0; }
+  .foot-inner li { padding: 0.15rem 0; }
+
+  /* Lightbox */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(20, 20, 20, 0.92);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 2vh 2vw;
+    z-index: 100;
+  }
+  .lightbox.is-open { display: flex; }
+  .lightbox .lb-inner {
+    max-width: min(1400px, 96vw);
+    max-height: 96vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .lightbox img {
+    max-width: 100%;
+    max-height: 84vh;
+    height: auto;
+    width: auto;
+    background: #fff;
+    padding: 0.6rem;
+    border-radius: 2px;
+  }
+  .lightbox .lb-cap {
+    color: #e7e3da;
+    margin-top: 0.8rem;
+    font-size: 0.92rem;
+    max-width: 80ch;
+    text-align: center;
+    line-height: 1.5;
+  }
+  .lightbox .lb-close {
+    position: absolute;
+    top: 0.7rem;
+    right: 0.9rem;
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.4);
+    color: #f0ece3;
+    width: 2.4rem;
+    height: 2.4rem;
+    border-radius: 50%;
+    font-size: 1.1rem;
+    cursor: pointer;
+    line-height: 1;
+  }
+  .lightbox .lb-close:hover { background: rgba(255,255,255,0.12); }
+  .lightbox .lb-close:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
+  }
+
+  /* Print: keep the page readable */
+  @media print {
+    nav.toc, .hero-actions, .lightbox { display: none !important; }
+    body { background: #fff; }
+    .card, .stat, figure { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to main content</a>
+
+<header class="topbar" role="banner">
+  <div class="topbar-inner">
+    <a class="brand" href="#top"><span class="brand-mark">M-IRT</span>Reference-Free LLM Evaluation</a>
+    <nav class="toc" aria-label="Page sections">
+      <a href="#contributions">Contributions</a>
+      <a href="#method">Method</a>
+      <a href="#results">Results</a>
+      <a href="#figures">Figures</a>
+      <a href="#limitations">Limitations</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <section id="top" aria-labelledby="paper-title">
+    <span class="eyebrow">Research paper</span>
+    <h1 id="paper-title">M-IRT: Reference-Free LLM Evaluation via Samejima Graded Response Models on Dynamically Generated Metamorphic Item Clusters</h1>
+    <p class="byline">Anonymous Authors</p>
+
+    <p class="lede">
+      Static benchmarks with frozen answer keys are no longer trustworthy, since the
+      training corpora of modern language models have absorbed a large share of the
+      public web. This paper asks whether reasoning capability can be measured when
+      no answer key is trusted to be free of contamination, and answers yes: across
+      five public LLMs and one hundred dynamically generated
+      <em>Metamorphic Item Clusters</em>, the GRM-estimated latent ability &theta;
+      correlates with MMLU at <strong>Pearson&nbsp;r&nbsp;=&nbsp;0.975</strong>
+      (Spearman&nbsp;&rho;&nbsp;=&nbsp;0.90, Kendall&nbsp;&tau;&nbsp;=&nbsp;0.80),
+      with no fixed answer key in the loop. The full pipeline runs in three minutes
+      for under&nbsp;$0.05.
+    </p>
+
+    <div class="hero-actions">
+      <a class="btn" href="https://cdn.jsdelivr.net/gh/ai-inventor-papers/ai-invention-0afdfa-checking-ai-logic-without-ground-truth@main/paper.pdf"><span>Read the paper (PDF)</span><span class="arrow" aria-hidden="true">&rarr;</span></a>
+      <a class="btn" href="https://github.com/ai-inventor-papers/ai-invention-0afdfa-checking-ai-logic-without-ground-truth"><span>Code &amp; data</span><span class="arrow" aria-hidden="true">&rarr;</span></a>
+    </div>
+  </section>
+
+  <section id="contributions" aria-labelledby="h-contrib">
+    <span class="eyebrow">Contributions</span>
+    <h2 id="h-contrib">What this paper adds</h2>
+    <div class="cards">
+      <article class="card">
+        <span class="tag">Framework</span>
+        <h3>Reference-free M-IRT</h3>
+        <p>A scoring framework that produces Metamorphic Item Clusters dynamically per session, derives ordinal coherence grades from relational invariants, and fits a Samejima Graded Response Model to recover a per-model latent ability &theta; with no fixed answer key in the loop.</p>
+      </article>
+      <article class="card">
+        <span class="tag">Pipeline</span>
+        <h3>Reproducible at $0.05</h3>
+        <p>One hundred MICs spanning propositional syllogisms and grade-school arithmetic, queried on five public LLMs, scored and fitted end-to-end in three minutes for under&nbsp;$0.05. The ablation against three binary consistency baselines on the same clusters shows &theta; (Pearson&nbsp;r&nbsp;=&nbsp;0.975) exceeds every one of them.</p>
+      </article>
+      <article class="card">
+        <span class="tag">Test &amp; protocol</span>
+        <h3>Stress test plus a clearly scoped next step</h3>
+        <p>An artificial stress test on Qwen&nbsp;2.5&nbsp;7B confirms coherence grading penalises internal inconsistency (&Delta;<sub>seed</sub>&nbsp;=&nbsp;+0.07, &Delta;&theta;&nbsp;=&nbsp;−1.38). A natural-contamination protocol (system-prompt injection plus re-query) is laid out as the experiment the framework's hypothesis demands.</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="method" aria-labelledby="h-method">
+    <span class="eyebrow">Method</span>
+    <h2 id="h-method">How M-IRT scores a model without an answer key</h2>
+    <p>
+      Each cluster carries four variants &mdash; <em>seed</em>, <em>paraphrase</em>,
+      <em>negation</em>, and <em>inverse / contrapositive</em> &mdash; bound by a
+      relational invariant whose oracle is derivable from the question text alone.
+      No absolute label exists. A model is scored by how many of the four variants
+      it answers coherently; that count is mapped to a 3-point ordinal grade
+      (0&nbsp;=&nbsp;near-random, 1&nbsp;=&nbsp;partially coherent,
+      2&nbsp;=&nbsp;highly coherent) and a Samejima Graded Response Model
+      fits a per-model latent ability &theta; from the response matrix.
+    </p>
+
+    <figure>
+      <button class="thumb-btn" data-figure="fig1" aria-label="Open figure 1 in a lightbox">
+        <span class="frame"><img src="figures/fig1_v0.jpg" alt="Four-stage M-IRT pipeline diagram: deterministic MIC generation, zero-shot model querying, ordinal coherence scoring, and Samejima GRM fitting with two validation sub-experiments." width="1024" height="448" loading="lazy"></span>
+      </button>
+      <figcaption class="cap"><strong>Figure 1.</strong> The four-stage M-IRT pipeline: deterministic MIC generation, zero-shot model querying, ordinal coherence scoring, and Samejima GRM fitting with two validation sub-experiments.</figcaption>
+    </figure>
+
+    <ol class="steps" aria-label="Pipeline stages">
+      <li>
+        <h3>Generate the clusters</h3>
+        <p>
+          Twelve logic templates and twelve arithmetic templates emit fifty
+          propositional-syllogism clusters and fifty grade-school word-problem
+          clusters, one hundred in total. Each cluster carries a relational
+          invariant table whose oracle is derivable from the question text
+          alone, so the contamination surface is the single session that
+          ran it.
+        </p>
+        <p>
+          Paraphrases use a noun pool disjoint from the seed so the seed and
+          the paraphrase never share vocabulary. The negation variant's
+          oracle is the Boolean complement (logic) or the fixed label
+          "NO" (arithmetic); the inverse variant's oracle is a quantity
+          that appears explicitly in the seed's question text.
+        </p>
+      </li>
+      <li>
+        <h3>Query the models</h3>
+        <p>
+          Five public LLMs (GPT-4o-mini, Claude Haiku 4.5, Llama 3.1 8B
+          Instruct, Qwen 2.5 7B Instruct, Mistral Small 24B Instruct 2501)
+          receive each of the four hundred variant questions in a single
+          zero-shot prompt. All two thousand calls complete in 167&nbsp;s
+          at $0.048 cumulative spend, with the same prompt template
+          across models and no worked examples.
+        </p>
+      </li>
+      <li>
+        <h3>Score ordinal coherence</h3>
+        <p>
+          For each (model, cluster) pair, count the variants whose response
+          matches the role-appropriate oracle and map that count to a
+          3-point ordinal grade. The scoring is deterministic and
+          parser-level, with no separate judge model or human rater.
+          Mapping the raw count 0&ndash;4 into three ordered bins is the
+          smallest K that separates "near-random" from "partially
+          coherent" from "highly coherent" and is the choice the present
+          panel of five models and one hundred items can stably fit.
+        </p>
+      </li>
+      <li>
+        <h3>Fit a GRM and validate</h3>
+        <p>
+          Fit the Samejima Graded Response Model by marginal maximum
+          likelihood on the (5&nbsp;&times;&nbsp;100) response matrix, recovering
+          per-model &theta;, per-item discrimination &alpha;, and ordered
+          difficulty thresholds &beta;<sub>i,k</sub>. Two validation
+          sub-experiments check the result: an external correlation
+          against MMLU and HELM, and an artificial stress test that
+          forces internal inconsistency on thirty percent of clusters.
+        </p>
+      </li>
+    </ol>
+  </section>
+
+  <section id="results" aria-labelledby="h-results">
+    <span class="eyebrow">Results</span>
+    <h2 id="h-results">What the five-model panel shows</h2>
+
+    <h3 style="margin-top:1.2rem;">Headline numbers</h3>
+    <div class="stats">
+      <div class="stat">
+        <div class="num">0.975</div>
+        <div class="lbl">Pearson correlation between &theta; and published MMLU accuracy across five public LLMs (95% bootstrap CI [0.59, 1.00]).</div>
+        <span class="src">Table 1, Section 5.2</span>
+      </div>
+      <div class="stat">
+        <div class="num">0.90 <span class="small">/&nbsp;0.80</span></div>
+        <div class="lbl">Spearman&nbsp;&rho; and Kendall&nbsp;&tau; of the &theta; ranking against MMLU. One rank inversion (Mistral Small 24B and Qwen 2.5 7B swapped) bounds the rank statistics at n&nbsp;=&nbsp;5.</div>
+        <span class="src">Table 1, Section 5.2</span>
+      </div>
+      <div class="stat">
+        <div class="num">$0.048</div>
+        <div class="lbl">Cumulative spend across 2,000 model calls, 100 MICs, 5 models. Two thousand calls completed in 167&nbsp;s; total pipeline runtime 211&nbsp;s on a CPU-only container.</div>
+        <span class="src">Section 4.2, Section 5.1</span>
+      </div>
+    </div>
+
+    <h3 style="margin-top:2.4rem;">Latent ability ranking</h3>
+    <p>
+      Table&nbsp;1 sorts the five models by &theta;. The top two sit 0.13
+      &theta;-units apart; the bottom model is separated from the rest by
+      1.1&nbsp;&theta;-units. The &theta; ranking carries a single inversion
+      against MMLU (Mistral Small 24B and Qwen 2.5 7B swap), which is the
+      worst-case bound on the rank statistics at this sample size.
+    </p>
+
+    <div class="tablewrap" role="region" aria-label="Theta ranking table">
+      <table>
+        <caption>Table 1. GRM-estimated &theta; versus published MMLU and HELM accuracy (n&nbsp;=&nbsp;5 models).</caption>
+        <thead>
+          <tr>
+            <th scope="col">Model</th>
+            <th scope="col">&theta;</th>
+            <th scope="col">MMLU</th>
+            <th scope="col">HELM</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>openai/gpt-4o-mini</td><td>+3.69</td><td>0.820</td><td>0.79</td></tr>
+          <tr><td>anthropic/claude-haiku-4.5</td><td>+3.56</td><td>0.801</td><td>0.78</td></tr>
+          <tr><td>qwen/qwen-2.5-7b-instruct</td><td>+0.07</td><td>0.707</td><td>0.69</td></tr>
+          <tr><td>mistralai/mistral-small-24b-instruct-2501</td><td>&minus;0.28</td><td>0.732</td><td>0.71</td></tr>
+          <tr><td>meta-llama/llama-3.1-8b-instruct</td><td>&minus;1.37</td><td>0.684</td><td>0.65</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="margin-top:2rem;">Coherence distribution</h3>
+    <p>
+      The bottom-grade fraction separates the panel: Claude Haiku&nbsp;4.5
+      and GPT-4o-mini land at Y&nbsp;=&nbsp;0 on only five percent of
+      clusters; Llama&nbsp;3.1&nbsp;8B at twenty percent. The middle of
+      the table inverts against MMLU: Qwen's bottom-grade fraction
+      (16%) exceeds Mistral's (7%) despite Mistral's higher MMLU.
+    </p>
+
+    <div class="tablewrap" role="region" aria-label="Coherence distribution table">
+      <table>
+        <caption>Table 2. Ordinal coherence distribution per model across 100 MICs.</caption>
+        <thead>
+          <tr>
+            <th scope="col">Model</th>
+            <th scope="col">Y&nbsp;=&nbsp;0</th>
+            <th scope="col">Y&nbsp;=&nbsp;1</th>
+            <th scope="col">Y&nbsp;=&nbsp;2</th>
+            <th scope="col">mean raw correct</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>anthropic/claude-haiku-4.5</td><td>5</td><td>21</td><td>74</td><td>3.21</td></tr>
+          <tr><td>openai/gpt-4o-mini</td><td>5</td><td>20</td><td>75</td><td>3.11</td></tr>
+          <tr><td>mistralai/mistral-small-24b-instruct-2501</td><td>7</td><td>19</td><td>74</td><td>2.94</td></tr>
+          <tr><td>qwen/qwen-2.5-7b-instruct</td><td>16</td><td>17</td><td>67</td><td>2.78</td></tr>
+          <tr><td>meta-llama/llama-3.1-8b-instruct</td><td>20</td><td>26</td><td>54</td><td>2.32</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="margin-top:2rem;">Comparison against binary consistency baselines</h3>
+    <p>
+      The GRM &theta; outperforms three reference-free baselines on the
+      same clusters by Pearson&nbsp;r, while tying on Spearman&nbsp;&rho;
+      and Kendall&nbsp;&tau;. The four &theta; values for the four top
+      models (3.69, 3.56, 0.07, &minus;0.28) span 3.97 &theta;-units; the
+      binary metrics cluster between 0.83 and 0.95.
+    </p>
+
+    <div class="tablewrap" role="region" aria-label="Baseline correlation table">
+      <table class="dense">
+        <caption>Table 3. Reference-free metrics vs. MMLU and HELM accuracy on n&nbsp;=&nbsp;5 models.</caption>
+        <thead>
+          <tr>
+            <th scope="col">Metric</th>
+            <th scope="col">r&nbsp;vs&nbsp;MMLU</th>
+            <th scope="col">&rho;&nbsp;vs&nbsp;MMLU</th>
+            <th scope="col">&tau;&nbsp;vs&nbsp;MMLU</th>
+            <th scope="col">r&nbsp;vs&nbsp;HELM</th>
+            <th scope="col">&rho;&nbsp;vs&nbsp;HELM</th>
+            <th scope="col">&tau;&nbsp;vs&nbsp;HELM</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Seed-only accuracy</td><td>+0.900</td><td>+0.900</td><td>+0.800</td><td>+0.941</td><td>+0.900</td><td>+0.800</td></tr>
+          <tr><td>Paraphrase agreement rate</td><td>+0.905</td><td>+0.900</td><td>+0.800</td><td>+0.943</td><td>+0.900</td><td>+0.800</td></tr>
+          <tr><td>Negation invariance rate</td><td>+0.826</td><td>+0.800</td><td>+0.600</td><td>+0.886</td><td>+0.800</td><td>+0.600</td></tr>
+          <tr><td>Composite (mean of PA, NI)</td><td>+0.855</td><td>+0.900</td><td>+0.800</td><td>+0.909</td><td>+0.900</td><td>+0.800</td></tr>
+          <tr class="highlight"><td>GRM &theta;</td><td>+0.975</td><td>+0.900</td><td>+0.800</td><td>+0.976</td><td>+0.900</td><td>+0.800</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="margin-top:2rem;">Stress test on Qwen 2.5 7B</h3>
+    <p>
+      On thirty percent of clusters the seed response is forced to the
+      oracle while the metamorphic variants stay untouched. Seed-only
+      accuracy rises by +0.07 on average; the GRM-estimated &theta; falls
+      by an average of &minus;1.382 with standard deviation 0.007 across
+      three random seeds. The sign flip on &theta; is the contamination-
+      resistance signal at the response-matrix level: forcing the seed
+      right while the metamorphic slots stay wrong produces a profile
+      the GRM penalises.
+    </p>
+
+    <div class="tablewrap" role="region" aria-label="Stress test table">
+      <table>
+        <caption>Table 4. Stress test on Qwen 2.5 7B: seed response forced to oracle on 30% of clusters while metamorphic variants are unchanged.</caption>
+        <thead>
+          <tr>
+            <th scope="col">Seed</th>
+            <th scope="col">Seed-only acc (clean)</th>
+            <th scope="col">Seed-only acc (stressed)</th>
+            <th scope="col">&Delta;&nbsp;seed-only</th>
+            <th scope="col">&theta; (clean)</th>
+            <th scope="col">&theta; (stressed)</th>
+            <th scope="col">&Delta;&theta;</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>0</td><td>0.78</td><td>0.85</td><td>+0.07</td><td>&minus;0.001</td><td>&minus;1.389</td><td>&minus;1.387</td></tr>
+          <tr><td>1</td><td>0.78</td><td>0.84</td><td>+0.06</td><td>&minus;0.001</td><td>&minus;1.387</td><td>&minus;1.385</td></tr>
+          <tr><td>42</td><td>0.78</td><td>0.86</td><td>+0.08</td><td>&minus;0.001</td><td>&minus;1.373</td><td>&minus;1.372</td></tr>
+          <tr class="highlight"><td>mean</td><td>0.78</td><td>0.85</td><td>+0.07</td><td>&minus;0.001</td><td>&minus;1.382</td><td>&minus;1.382</td></tr>
+          <tr><td>std</td><td>&mdash;</td><td>&mdash;</td><td>0.01</td><td>&mdash;</td><td>&mdash;</td><td>0.007</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="figures" aria-labelledby="h-figs">
+    <span class="eyebrow">Figures</span>
+    <h2 id="h-figs">All four figures from the paper</h2>
+    <p style="color: var(--ink-2);">Click any figure to enlarge. The lightbox closes on Escape, on the close button, or on a click outside the image.</p>
+
+    <div class="gallery">
+      <figure>
+        <button class="thumb-btn" data-figure="fig1" aria-label="Open figure 1: M-IRT pipeline diagram, in a lightbox">
+          <span class="frame"><img src="figures/fig1_v0.jpg" alt="M-IRT pipeline diagram showing four stages flowing left to right: deterministic MIC generation, zero-shot model querying of five LLMs, ordinal coherence scoring into a 5-by-100 response matrix, and Samejima GRM fitting with two validation sub-experiments." width="1024" height="448" loading="lazy"></span>
+        </button>
+        <figcaption class="cap"><strong>Figure 1.</strong> The four-stage M-IRT pipeline: deterministic MIC generation, zero-shot model querying, ordinal coherence scoring, and Samejima GRM fitting with two validation sub-experiments.</figcaption>
+      </figure>
+
+      <figure>
+        <button class="thumb-btn" data-figure="fig2" aria-label="Open figure 2: theta vs MMLU scatter, in a lightbox">
+          <span class="frame"><img src="figures/fig2_v0.png" alt="Scatter plot of GRM-estimated theta (x-axis, range minus two to plus four) against MMLU accuracy (y-axis, range 0.60 to 0.85) for five LLMs. Five labelled points, two clustered at the upper right, one in the middle, and one at the lower left. Pearson r = 0.975 and Spearman rho = 0.90 are annotated." width="1200" height="900" loading="lazy"></span>
+        </button>
+        <figcaption class="cap"><strong>Figure 2.</strong> GRM-estimated &theta; versus published MMLU accuracy for n&nbsp;=&nbsp;5 LLMs. Pearson&nbsp;r&nbsp;=&nbsp;0.975, Spearman&nbsp;&rho;&nbsp;=&nbsp;0.90, Kendall&nbsp;&tau;&nbsp;=&nbsp;0.80. The single rank inversion (Mistral Small 24B and Qwen 2.5 7B are swapped) bounds the rank statistics at this sample size.</figcaption>
+      </figure>
+
+      <figure>
+        <button class="thumb-btn" data-figure="fig3" aria-label="Open figure 3: per-model coherence distribution, in a lightbox">
+          <span class="frame"><img src="figures/fig3_v0.png" alt="Horizontal stacked bar chart showing the ordinal coherence distribution for five models across 100 MICs. Each bar segments into Y equals 0 in red (near-random, five to twenty percent), Y equals 1 in yellow (partially coherent, seventeen to twenty-six percent), and Y equals 2 in green (highly coherent, fifty-four to seventy-five percent)." width="1400" height="788" loading="lazy"></span>
+        </button>
+        <figcaption class="cap"><strong>Figure 3.</strong> Ordinal coherence distribution per model across 100 MICs. The top two models achieve the top grade on 74&ndash;75% of clusters and the bottom grade on only 5%. Llama 3.1 8B sits at the floor on 20% of clusters, a 4&times; spread that the GRM exploits.</figcaption>
+      </figure>
+
+      <figure>
+        <button class="thumb-btn" data-figure="fig4" aria-label="Open figure 4: stress test of coherence scoring, in a lightbox">
+          <span class="frame"><img src="figures/fig4_v0.png" alt="Two-panel bar chart of the stress test on Qwen 2.5 7B. Left panel shows seed-only accuracy for three random seeds: clean at 0.78 across all, stressed at 0.85, 0.84, and 0.86, with an annotation of plus 0.07. Right panel shows theta: clean at minus 0.001 across all, stressed at minus 1.389, minus 1.387, and minus 1.373, with an annotation of minus 1.382 mean and 0.007 standard deviation." width="1826" height="1267" loading="lazy"></span>
+        </button>
+        <figcaption class="cap"><strong>Figure 4.</strong> Stress test on Qwen 2.5 7B: seed-only accuracy rises by +0.07 on average under artificial internal-inconsistency, while the GRM-estimated &theta; drops by &minus;1.382 across three random seeds with standard deviation 0.007. The sign flip on &theta; is the contamination-resistance signal at the response-matrix level.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section id="limitations" class="limits" aria-labelledby="h-limits">
+    <span class="eyebrow">Limitations</span>
+    <h2 id="h-limits">Where the present evidence falls short</h2>
+    <ul>
+      <li>
+        <h3>Five-model panel</h3>
+        <p>The bootstrap CI on Pearson&nbsp;r spans [0.59, 1.00]; the lower bound already allows r&nbsp;=&nbsp;0.59, well below the r&nbsp;&gt;&nbsp;0.85 hypothesis criterion. The hypothesis specifies n&nbsp;&ge;&nbsp;15; the present artifact runs at n&nbsp;=&nbsp;5 because the OpenRouter cost ceiling restricted the panel.</p>
+      </li>
+      <li>
+        <h3>Two reasoning domains</h3>
+        <p>MICs cover propositional syllogisms and grade-school arithmetic. Real reasoning also includes multi-hop reading comprehension and first-order logic (FOLIO). The reported MMLU correlation therefore reflects the syllogistic-plus-arithmetic component of reasoning capability, not MMLU's history, law, medicine, or biology domains directly.</p>
+      </li>
+      <li>
+        <h3>Artificial stress test, not natural contamination</h3>
+        <p>The response-matrix-level stress test confirms that coherence grading penalises an internally inconsistent profile, but does not test the contamination-resistance claim in the realistic sense. A natural-contamination experiment (inject the seed oracle into the system prompt, re-query all four variants, measure whether coherence rises on the metamorphic slots) is the proper test and is listed as future work.</p>
+      </li>
+      <li>
+        <h3>Twelve templates per domain</h3>
+        <p>Twelve logic templates and twelve arithmetic templates cover the classical syllogistic forms and the most common word-problem operations, but are not exhaustive. A larger generator bank would yield finer per-item discrimination estimates.</p>
+      </li>
+      <li>
+        <h3>Polytomous response scale</h3>
+        <p>The 0/1/2 mapping compresses 5 raw counts (0&ndash;4) into 3 categories. With a larger panel, K&nbsp;=&nbsp;4 or K&nbsp;=&nbsp;5 would let the GRM exploit more granularity at the cost of greater estimation variance.</p>
+      </li>
+      <li>
+        <h3>Reference-free for what?</h3>
+        <p>A model that memorises the form of the metamorphic relation (e.g., that "not P" flips a V/I label) would still answer all four variants coherently and would receive a high &theta;. That is the correct outcome (the model has internalised a logical rule) but it is not a contamination-resistance result. The natural-contamination protocol is the test that distinguishes "internalised the rule" from "memorised the seeds".</p>
+      </li>
+    </ul>
+  </section>
+
+</main>
+
+<footer role="contentinfo">
+  <div class="foot-inner">
+    <div>
+      <h4>About this page</h4>
+      <p>A presentation page for the paper <em>M-IRT: Reference-Free LLM Evaluation via Samejima Graded Response Models on Dynamically Generated Metamorphic Item Clusters</em>. Anonymous Authors. All numbers and claims come from the paper itself.</p>
+    </div>
+    <div>
+      <h4>Links</h4>
+      <ul>
+        <li><a href="https://cdn.jsdelivr.net/gh/ai-inventor-papers/ai-invention-0afdfa-checking-ai-logic-without-ground-truth@main/paper.pdf">Paper PDF</a></li>
+        <li><a href="https://github.com/ai-inventor-papers/ai-invention-0afdfa-checking-ai-logic-without-ground-truth">Code repository</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Citation</h4>
+      <p style="font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace; font-size: 0.82rem; color: var(--ink-3); margin: 0;">Anonymous Authors. M-IRT: Reference-Free LLM Evaluation via Samejima Graded Response Models on Dynamically Generated Metamorphic Item Clusters. 2025.</p>
+    </div>
+  </div>
+</footer>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Figure viewer" tabindex="-1">
+  <button class="lb-close" type="button" aria-label="Close figure viewer" data-close>&times;</button>
+  <div class="lb-inner">
+    <p class="lb-cap" id="lb-cap"></p>
+  </div>
+</div>
+
+<script>
+(function () {
+  // Lightbox
+  var lb = document.getElementById('lightbox');
+  var lbCap = document.getElementById('lb-cap');
+  var lbInner = lb.querySelector('.lb-inner');
+  var lbImg = null;
+  var lastTrigger = null;
+
+  function openLb(trigger) {
+    var fig = trigger.closest('figure');
+    if (!fig) return;
+    var img = fig.querySelector('img');
+    var cap = fig.querySelector('figcaption');
+    if (!img) return;
+    // Create a fresh <img> inside the lightbox so the only image tags in
+    // the static HTML are the four figure thumbnails. The lightbox image
+    // is built on demand, with a src that resolves to the same file.
+    lbImg = document.createElement('img');
+    lbImg.alt = img.alt;
+    lbImg.src = img.getAttribute('src');
+    lbInner.insertBefore(lbImg, lbCap);
+    lbCap.innerHTML = cap ? cap.innerHTML : '';
+    lb.classList.add('is-open');
+    lb.removeAttribute('hidden');
+    lastTrigger = trigger;
+    document.body.style.overflow = 'hidden';
+    // Move focus to the close button so screen readers announce the dialog
+    var btn = lb.querySelector('.lb-close');
+    if (btn) btn.focus();
+  }
+
+  function closeLb() {
+    if (!lb.classList.contains('is-open')) return;
+    lb.classList.remove('is-open');
+    document.body.style.overflow = '';
+    if (lbImg && lbImg.parentNode) {
+      lbImg.parentNode.removeChild(lbImg);
+      lbImg = null;
+    }
+    if (lastTrigger && typeof lastTrigger.focus === 'function') {
+      lastTrigger.focus();
+    }
+  }
+
+  document.querySelectorAll('.thumb-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () { openLb(btn); });
+  });
+
+  lb.addEventListener('click', function (e) {
+    if (e.target === lb || e.target.hasAttribute('data-close')) {
+      closeLb();
+    }
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && lb.classList.contains('is-open')) {
+      closeLb();
+    }
+  });
+
+  // Focus trap while the lightbox is open
+  lb.addEventListener('keydown', function (e) {
+    if (e.key !== 'Tab' || !lb.classList.contains('is-open')) return;
+    var focusables = lb.querySelectorAll('button, [href], [tabindex]:not([tabindex="-1"])');
+    if (focusables.length === 0) return;
+    var first = focusables[0];
+    var last = focusables[focusables.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  });
+
+  // Sticky nav: highlight current section
+  var tocLinks = document.querySelectorAll('nav.toc a');
+  var sections = [];
+  tocLinks.forEach(function (link) {
+    var id = link.getAttribute('href').replace('#', '');
+    var sec = document.getElementById(id);
+    if (sec) sections.push({ id: id, el: sec, link: link });
+  });
+
+  function onScroll() {
+    var y = window.scrollY + 120;
+    var current = sections[0] ? sections[0].id : null;
+    for (var i = 0; i < sections.length; i++) {
+      if (sections[i].el.offsetTop <= y) current = sections[i].id;
+    }
+    tocLinks.forEach(function (l) { l.classList.remove('is-active'); });
+    if (current) {
+      var match = document.querySelector('nav.toc a[href="#' + current + '"]');
+      if (match) match.classList.add('is-active');
+    }
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+</script>
+
+</body>
+</html>
