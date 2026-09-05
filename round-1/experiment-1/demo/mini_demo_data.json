@@ -1,0 +1,1001 @@
+{
+  "metadata": {
+    "demo_name": "M-IRT mini demo data",
+    "description": "Curated 24-cluster subset (12 logic + 12 arithmetic) plus the 5-model PUBLISHED_ACCURACY reference table.",
+    "n_clusters": 24,
+    "n_logic": 12,
+    "n_arithmetic": 12,
+    "seed": 42,
+    "panel": [
+      "openai/gpt-4o-mini",
+      "anthropic/claude-haiku-4.5",
+      "meta-llama/llama-3.1-8b-instruct",
+      "qwen/qwen-2.5-7b-instruct",
+      "mistralai/mistral-small-24b-instruct-2501"
+    ]
+  },
+  "clusters": [
+    {
+      "cluster_id": "logic_0009",
+      "domain": "logic",
+      "template_id": "T12",
+      "difficulty_hint": "medium",
+      "oracle_correct": "V",
+      "variants": {
+        "seed": {
+          "role": "seed",
+          "question": "All scientists are teachers. All buildings are not teachers. Therefore, no scientists are buildings.",
+          "oracle": "V"
+        },
+        "paraphrase": {
+          "role": "paraphrase",
+          "question": "All butchers are mushrooms. All journalists are not mushrooms. Therefore, no butchers are journalists.",
+          "oracle": "V"
+        },
+        "negation": {
+          "role": "negation",
+          "question": "Is it NOT the case that no scientists are buildings?",
+          "oracle": "FLIPPED"
+        },
+        "contrapositive": {
+          "role": "contrapositive",
+          "question": "Is the following claim also true: no scientists are buildings?",
+          "oracle": "V"
+        }
+      },
+      "answers": {
+        "seed": "V",
+        "paraphrase": "V",
+        "negation": "FLIPPED",
+        "contrapositive": "V"
+      },
+      "relations": {
+        "paraphrase_eq_seed": true,
+        "negation_eq_not_seed": true,
+        "contrapositive_eq_seed": true
+      }
+    },
+    {
+      "cluster_id": "logic_0004",
+      "domain": "logic",
+      "template_id": "T8",
+      "difficulty_hint": "hard",
+      "oracle_correct": "I",
+      "variants": {
+        "seed": {
+          "role": "seed",
+          "question": "All trees are dancers. All dancers are structures. Therefore, some trees are not structures.",
+          "oracle": "I"
+        },
+        "paraphrase": {
+          "role": "paraphrase",
+          "question": "All philosophers are pharmacists. All pharmacists are diamonds. Therefore, some philosophers are not diamonds.",
+          "oracle": "I"
+        },
+        "negation": {
+          "role": "negation",
+          "question": "Is it NOT the case that some trees are not structures?",
+          "oracle": "FLIPPED"
+        },
+        "contrapositive": {
+          "role": "contrapositive",
+          "question": "Is the following claim also true: some trees are not structures?",
+          "oracle": "I"
+        }
+      },
+      "answers": {
+        "seed": "I",
+        "paraphrase": "I",
+        "negation": "FLIPPED",
+        "contrapositive": "I"
+      },
+      "relations": {
+        "paraphrase_eq_seed": true,
+        "negation_eq_not_seed": true,
+        "contrapositive_eq_seed": true
+      }
+    },
+    {
+      "cluster_id": "arith_0000",
+      "domain": "arithmetic",
+      "template_id": "AS11",
+      "difficulty_hint": "medium",
+      "oracle_correct": "12",
+      "variants": {
+        "seed": {
+          "role": "seed",
+          "question": "Hassan has 19 candies. Gideon has 7. How many more candies does Hassan have than Gideon?",
+          "oracle": "12"
+        },
+        "paraphrase": {
+          "role": "paraphrase",
+          "question": "Nadia has 19 lacquered fans. Inez has 7. How many more lacquered fans does Nadia have than Inez?",
+          "oracle": "12"
+        },
+        "negation": {
+          "role": "negation",
+          "question": "Consider: Hassan has 19 candies. Gideon has 7. How many more candies does Hassan have than Gideon? Is the answer to this problem equal to 13? Answer YES or NO only.",
+          "oracle": "NO"
+        },
+        "inverse": {
+          "role": "inverse",
+          "question": "(Inverse) Consider a problem with the same setup as: 'Hassan has 19 candies. Gideon has 7. How many more candies does Hassan have than Gideon?'. What was the original starting quantity (the first number mentioned)?",
+          "oracle": "7"
+        }
+      },
+      "answers": {
+        "seed": "12",
+        "paraphrase": "12",
+        "negation": "NO",
+        "inverse": "7"
+      },
+      "relations": {
+        "paraphrase_eq_seed": true,
+        "negation_eq_no": true,
+        "inverse_distinct": true
+      }
+    },
+    {
+      "cluster_id": "arith_0002",
+      "domain": "arithmetic",
+      "template_id": "AS10",
+      "difficulty_hint": "easy",
+      "oracle_correct": "4",
+      "variants": {
+        "seed": {
+          "role": "seed",
+          "question": "Uma has 24 beads. Uma gives 12 to Quincy and then gives 8 to a third person. How many beads does Uma have left?",
+          "oracle": "4"
+        },
+        "paraphrase": {
+          "role": "paraphrase",
+          "question": "Vera has 24 fossils. Vera gives 12 to Olive and then gives 8 to a third person. How many fossils does Vera have left?",
+          "oracle": "4"
+        },
+        "negation": {
+          "role": "negation",
+          "question": "Consider: Uma has 24 beads. Uma gives 12 to Quincy and then gives 8 to a third person. How many beads does Uma have left? Is the answer to this problem equal to 5? Answer YES or NO only.",
+          "oracle": "NO"
+        },
+        "inverse": {
+          "role": "inverse",
+          "question": "(Inverse) Consider a problem with the same setup as: 'Uma has 24 beads. Uma gives 12 to Quincy and then gives 8 to a third person. How many beads does Uma have left?'. What was the original starting quantity (the first number mentioned)?",
+          "oracle": "24"
+        }
+      },
+      "answers": {
+        "seed": "4",
+        "paraphrase": "4",
+        "negation": "NO",
+        "inverse": "24"
+      },
+      "relations": {
+        "paraphrase_eq_seed": true,
+        "negation_eq_no": true,
+        "inverse_distinct": true
+      }
+    },
+    {
+      "cluster_id": "logic_0002",
+      "domain": "logic",
+      "template_id": "T7",
+      "difficulty_hint": "medium",
+      "oracle_correct": "I",
+      "variants": {
+        "seed": {
+          "role": "seed",
+          "question": "All teachers are lawyers. All musicians are lawyers. Therefore, some teachers are musicians.",
+          "oracle": "I"
+        },
+        "paraphrase": {
+          "role": "paraphrase",
+          "question": "All barbers are fishermen. All toys are fishermen. Therefore, some barbers are toys.",
+          "oracle": "I"
+        },
+        "negation": {
+          "role": "negation",
+          "question": "Is it NOT the case that some teachers are musicians?",
+          "oracle": "FLIPPED"
+        },
+        "contrapositive": {
+          "role": "contrapositive",
+          "question": "Is the following claim also true: some teachers are musicians?",
+          "oracle": "I"
+        }
+      },
+      "answers": {
+        "seed": "I",
+        "paraphrase": "I",
+        "negation": "FLIPPED",
+        "contrapositive": "I"
+      },
+      "relations": {
+        "paraphrase_eq_seed": true,
+        "negation_eq_not_seed": true,
+        "contrapositive_eq_seed": true
+      }
+    },
+    {
+      "cluster_id": "arith_0007",
+      "domain": "arithmetic",
+      "template_id": "AS6",
+      "difficulty_hint": "medium",
+      "oracle_correct": "21",
+      "variants": {
+        "seed": {
+          "role": "seed",
+          "question": "Carmen buys 4 plums at $1 each. Carmen pays with a $25 bill. How much change does Carmen receive?",
+          "oracle": "21"
+        },
+        "paraphrase": {
+          "role": "paraphrase",
+          "question": "Zara buys 4 fossils at $1 each. Zara pays with a $25 bill. How much change does Zara receive?",
+          "oracle": "21"
+        },
+        "negation": {
+          "role": "negation",
+          "question": "Consider: Carmen buys 4 plums at $1 each. Carmen pays with a $25 bill. How much change does Carmen receive? Is the answer to this problem equal to 22? Answer YES or NO only.",
+          "oracle": "NO"
+        },
+        "inverse": {
+          "role": "inverse",
+          "question": "(Inverse) Consider a problem with the same setup as: 'Carmen buys 4 plums at $1 each. Carmen pays with a $25 bill. How much change does Carmen receive?'. What was the original starting quantity (the first number mentioned)?",
+          "oracle": "4"
+        }
+      },
+      "answers": {
+        "seed": "21",
+        "paraphrase": "21",
+        "negation": "NO",
+        "inverse": "4"
+      },
+      "relations": {
+        "paraphrase_eq_seed": true,
+        "negation_eq_no": true,
+        "inverse_distinct": true
+      }
+    },
+    {
+      "cluster_id": "logic_0008",
+      "domain": "logic",
+      "template_id": "T5",
+      "difficulty_hint": "easy",
+      "oracle_correct": "V",
+      "variants": {
+        "seed": {
+          "role": "seed",
+          "question": "Some structures are birds. All birds are fish. Therefore, some structures are fish.",
+          "oracle": "V"
+        },
+        "paraphrase": {
+          "role": "paraphrase",
+          "question": "Some crystals are lanterns. All lanterns are surveyors. Therefore, some crystals are surveyors.",
+          "oracle": "V"
+        },
+        "negation": {
+          "role": "negation",
+          "question": "Is it NOT the case that some structures are fish?",
+          "oracle": "FLIPPED"
+        },
+        "contrapositive": {
+          "role": "contrapositive",
+          "question": "Is the following claim also true: some structures are fish?",
+          "oracle": "V"
+        }
+      },
+      "answers": {
+        "seed": "V",
+        "paraphrase": "V",
+        "negation": "FLIPPED",
+        "contrapositive": "V"
+      },
+      "relations": {
+        "paraphrase_eq_seed": true,
+        "negation_eq_not_seed": true,
+        "contrapositive_eq_seed": true
+      }
+    },
+    {
+      "cluster_id": "logic_0001",
+      "domain": "logic",
+      "template_id": "T3",
+      "difficulty_hint": "hard",
+      "oracle_correct": "I",
+      "variants": {
+        "seed": {
+          "role": "seed",
+          "question": "No furniture are farmers. All farmers are buildings. Therefore, no furniture are buildings.",
+          "oracle": "I"
+        },
+        "paraphrase": {
+          "role": "paraphrase",
+          "question": "No toys are journalists. All journalists are blankets. Therefore, no toys are blankets.",
+          "oracle": "I"
+        },
+        "negation": {
+          "role": "negation",
+          "question": "Is it NOT the case that no furniture are buildings?",
+          "oracle": "FLIPPED"
+        },
+        "contrapositive": {
+          "role": "contrapositive",
+          "question": "Is the following claim also true: no furniture are buildings?",
+          "oracle": "I"
+        }
+      },
+      "answers": {
+        "seed": "I",
+        "paraphrase": "I",
+        "negation": "FLIPPED",
+        "contrapositive": "I"
+      },
+      "relations": {
+        "paraphrase_eq_seed": true,
+        "negation_eq_not_seed": true,
+        "contrapositive_eq_seed": true
+      }
+    },
+    {
+      "cluster_id": "logic_0000",
+      "domain": "logic",
+      "template_id": "T11",
+      "difficulty_hint": "medium",
+      "oracle_correct": "V",
+      "variants": {
+        "seed": {
+          "role": "seed",
+          "question": "Some musicians are not lawyers. All lawyers are machines. Therefore, some musicians are not machines.",
+          "oracle": "V"
+        },
+        "paraphrase": {
+          "role": "paraphrase",
+          "question": "Some spices are not fishermen. All fishermen are butchers. Therefore, some spices are not butchers.",
+          "oracle": "V"
+        },
+        "negation": {
+          "role": "negation",
+          "question": "Is it NOT the case that some musicians are not machines?",
+          "oracle": "FLIPPED"
+        },
+        "contrapositive": {
+          "role": "contrapositive",
+          "question": "Is the following claim also true: some musicians are not machines?",
+          "oracle": "V"
+        }
+      },
+      "answers": {
+        "seed": "V",
+        "paraphrase": "V",
+        "negation": "FLIPPED",
+        "contrapositive": "V"
+      },
+      "relations": {
+        "paraphrase_eq_seed": true,
+        "negation_eq_not_seed": true,
+        "contrapositive_eq_seed": true
+      }
+    },
+    {
+      "cluster_id": "arith_0008",
+      "domain": "arithmetic",
+      "template_id": "AS11",
+      "difficulty_hint": "easy",
+      "oracle_correct": "2",
+      "variants": {
+        "seed": {
+          "role": "seed",
+          "question": "Inez has 19 feathers. Rafael has 17. How many more feathers does Inez have than Rafael?",
+          "oracle": "2"
+        },
+        "paraphrase": {
+          "role": "paraphrase",
+          "question": "Owen has 19 tiny bells. Greta has 17. How many more tiny bells does Owen have than Greta?",
+          "oracle": "2"
+        },
+        "negation": {
+          "role": "negation",
+          "question": "Consider: Inez has 19 feathers. Rafael has 17. How many more feathers does Inez have than Rafael? Is the answer to this problem equal to 3? Answer YES or NO only.",
+          "oracle": "NO"
+        },
+        "inverse": {
+          "role": "inverse",
+          "question": "(Inverse) Consider a problem with the same setup as: 'Inez has 19 feathers. Rafael has 17. How many more feathers does Inez have than Rafael?'. What was the original starting quantity (the first number mentioned)?",
+          "oracle": "17"
+        }
+      },
+      "answers": {
+        "seed": "2",
+        "paraphrase": "2",
+        "negation": "NO",
+        "inverse": "17"
+      },
+      "relations": {
+        "paraphrase_eq_seed": true,
+        "negation_eq_no": true,
+        "inverse_distinct": true
+      }
+    },
+    {
+      "cluster_id": "logic_0011",
+      "domain": "logic",
+      "template_id": "T6",
+      "difficulty_hint": "hard",
+      "oracle_correct": "I",
+      "variants": {
+        "seed": {
+          "role": "seed",
+          "question": "Some carpenters are soldiers. Some soldiers are buildings. Therefore, some carpenters are buildings.",
+          "oracle": "I"
+        },
+        "paraphrase": {
+          "role": "paraphrase",
+          "question": "Some spices are librarians. Some librarians are curtains. Therefore, some spices are curtains.",
+          "oracle": "I"
+        },
+        "negation": {
+          "role": "negation",
+          "question": "Is it NOT the case that some carpenters are buildings?",
+          "oracle": "FLIPPED"
+        },
+        "contrapositive": {
+          "role": "contrapositive",
+          "question": "Is the following claim also true: some carpenters are buildings?",
+          "oracle": "I"
+        }
+      },
+      "answers": {
+        "seed": "I",
+        "paraphrase": "I",
+        "negation": "FLIPPED",
+        "contrapositive": "I"
+      },
+      "relations": {
+        "paraphrase_eq_seed": true,
+        "negation_eq_not_seed": true,
+        "contrapositive_eq_seed": true
+      }
+    },
+    {
+      "cluster_id": "arith_0010",
+      "domain": "arithmetic",
+      "template_id": "AS4",
+      "difficulty_hint": "medium",
+      "oracle_correct": "22",
+      "variants": {
+        "seed": {
+          "role": "seed",
+          "question": "A box has 2 cards. 4 are taken out and 24 put in. How many cards are in the box?",
+          "oracle": "22"
+        },
+        "paraphrase": {
+          "role": "paraphrase",
+          "question": "A box has 2 beads of jade. 4 are taken out and 24 put in. How many beads of jade are in the box?",
+          "oracle": "22"
+        },
+        "negation": {
+          "role": "negation",
+          "question": "Consider: A box has 2 cards. 4 are taken out and 24 put in. How many cards are in the box? Is the answer to this problem equal to 23? Answer YES or NO only.",
+          "oracle": "NO"
+        },
+        "inverse": {
+          "role": "inverse",
+          "question": "(Inverse) Consider a problem with the same setup as: 'A box has 2 cards. 4 are taken out and 24 put in. How many cards are in the box?'. What was the original starting quantity (the first number mentioned)?",
+          "oracle": "2"
+        }
+      },
+      "answers": {
+        "seed": "22",
+        "paraphrase": "22",
+        "negation": "NO",
+        "inverse": "2"
+      },
+      "relations": {
+        "paraphrase_eq_seed": true,
+        "negation_eq_no": true,
+        "inverse_distinct": true
+      }
+    },
+    {
+      "cluster_id": "logic_0005",
+      "domain": "logic",
+      "template_id": "T6",
+      "difficulty_hint": "hard",
+      "oracle_correct": "I",
+      "variants": {
+        "seed": {
+          "role": "seed",
+          "question": "Some dancers are drivers. Some drivers are pilots. Therefore, some dancers are pilots.",
+          "oracle": "I"
+        },
+        "paraphrase": {
+          "role": "paraphrase",
+          "question": "Some shells are bakers. Some bakers are journalists. Therefore, some shells are journalists.",
+          "oracle": "I"
+        },
+        "negation": {
+          "role": "negation",
+          "question": "Is it NOT the case that some dancers are pilots?",
+          "oracle": "FLIPPED"
+        },
+        "contrapositive": {
+          "role": "contrapositive",
+          "question": "Is the following claim also true: some dancers are pilots?",
+          "oracle": "I"
+        }
+      },
+      "answers": {
+        "seed": "I",
+        "paraphrase": "I",
+        "negation": "FLIPPED",
+        "contrapositive": "I"
+      },
+      "relations": {
+        "paraphrase_eq_seed": true,
+        "negation_eq_not_seed": true,
+        "contrapositive_eq_seed": true
+      }
+    },
+    {
+      "cluster_id": "arith_0005",
+      "domain": "arithmetic",
+      "template_id": "AS12",
+      "difficulty_hint": "hard",
+      "oracle_correct": "90",
+      "variants": {
+        "seed": {
+          "role": "seed",
+          "question": "Each bag holds 18 lemons. Jules buys 5 bags. How many lemons does Jules have in total?",
+          "oracle": "90"
+        },
+        "paraphrase": {
+          "role": "paraphrase",
+          "question": "Each bag holds 18 fossils. Ula buys 5 bags. How many fossils does Ula have in total?",
+          "oracle": "90"
+        },
+        "negation": {
+          "role": "negation",
+          "question": "Consider: Each bag holds 18 lemons. Jules buys 5 bags. How many lemons does Jules have in total? Is the answer to this problem equal to 91? Answer YES or NO only.",
+          "oracle": "NO"
+        },
+        "inverse": {
+          "role": "inverse",
+          "question": "(Inverse) Consider a problem with the same setup as: 'Each bag holds 18 lemons. Jules buys 5 bags. How many lemons does Jules have in total?'. What was the original starting quantity (the first number mentioned)?",
+          "oracle": "18"
+        }
+      },
+      "answers": {
+        "seed": "90",
+        "paraphrase": "90",
+        "negation": "NO",
+        "inverse": "18"
+      },
+      "relations": {
+        "paraphrase_eq_seed": true,
+        "negation_eq_no": true,
+        "inverse_distinct": true
+      }
+    },
+    {
+      "cluster_id": "logic_0010",
+      "domain": "logic",
+      "template_id": "T4",
+      "difficulty_hint": "easy",
+      "oracle_correct": "V",
+      "variants": {
+        "seed": {
+          "role": "seed",
+          "question": "All farmers are gardeners. No gardeners are singers. Therefore, no farmers are singers.",
+          "oracle": "V"
+        },
+        "paraphrase": {
+          "role": "paraphrase",
+          "question": "All diamonds are crystals. No crystals are opticians. Therefore, no diamonds are opticians.",
+          "oracle": "V"
+        },
+        "negation": {
+          "role": "negation",
+          "question": "Is it NOT the case that no farmers are singers?",
+          "oracle": "FLIPPED"
+        },
+        "contrapositive": {
+          "role": "contrapositive",
+          "question": "Is the following claim also true: no farmers are singers?",
+          "oracle": "V"
+        }
+      },
+      "answers": {
+        "seed": "V",
+        "paraphrase": "V",
+        "negation": "FLIPPED",
+        "contrapositive": "V"
+      },
+      "relations": {
+        "paraphrase_eq_seed": true,
+        "negation_eq_not_seed": true,
+        "contrapositive_eq_seed": true
+      }
+    },
+    {
+      "cluster_id": "arith_0004",
+      "domain": "arithmetic",
+      "template_id": "AS10",
+      "difficulty_hint": "easy",
+      "oracle_correct": "5",
+      "variants": {
+        "seed": {
+          "role": "seed",
+          "question": "Jules has 22 stamps. Jules gives 12 to Owen and then gives 5 to a third person. How many stamps does Jules have left?",
+          "oracle": "5"
+        },
+        "paraphrase": {
+          "role": "paraphrase",
+          "question": "Priya has 22 tiny lamps. Priya gives 12 to Alice and then gives 5 to a third person. How many tiny lamps does Priya have left?",
+          "oracle": "5"
+        },
+        "negation": {
+          "role": "negation",
+          "question": "Consider: Jules has 22 stamps. Jules gives 12 to Owen and then gives 5 to a third person. How many stamps does Jules have left? Is the answer to this problem equal to 6? Answer YES or NO only.",
+          "oracle": "NO"
+        },
+        "inverse": {
+          "role": "inverse",
+          "question": "(Inverse) Consider a problem with the same setup as: 'Jules has 22 stamps. Jules gives 12 to Owen and then gives 5 to a third person. How many stamps does Jules have left?'. What was the original starting quantity (the first number mentioned)?",
+          "oracle": "22"
+        }
+      },
+      "answers": {
+        "seed": "5",
+        "paraphrase": "5",
+        "negation": "NO",
+        "inverse": "22"
+      },
+      "relations": {
+        "paraphrase_eq_seed": true,
+        "negation_eq_no": true,
+        "inverse_distinct": true
+      }
+    },
+    {
+      "cluster_id": "logic_0003",
+      "domain": "logic",
+      "template_id": "T10",
+      "difficulty_hint": "easy",
+      "oracle_correct": "V",
+      "variants": {
+        "seed": {
+          "role": "seed",
+          "question": "All lawyers are flowers. No lawyers are soldiers. Therefore, no flowers are soldiers.",
+          "oracle": "V"
+        },
+        "paraphrase": {
+          "role": "paraphrase",
+          "question": "All toys are novels. No toys are butchers. Therefore, no novels are butchers.",
+          "oracle": "V"
+        },
+        "negation": {
+          "role": "negation",
+          "question": "Is it NOT the case that no flowers are soldiers?",
+          "oracle": "FLIPPED"
+        },
+        "contrapositive": {
+          "role": "contrapositive",
+          "question": "Is the following claim also true: no flowers are soldiers?",
+          "oracle": "V"
+        }
+      },
+      "answers": {
+        "seed": "V",
+        "paraphrase": "V",
+        "negation": "FLIPPED",
+        "contrapositive": "V"
+      },
+      "relations": {
+        "paraphrase_eq_seed": true,
+        "negation_eq_not_seed": true,
+        "contrapositive_eq_seed": true
+      }
+    },
+    {
+      "cluster_id": "logic_0006",
+      "domain": "logic",
+      "template_id": "T7",
+      "difficulty_hint": "medium",
+      "oracle_correct": "I",
+      "variants": {
+        "seed": {
+          "role": "seed",
+          "question": "All farmers are miners. All plumbers are miners. Therefore, some farmers are plumbers.",
+          "oracle": "I"
+        },
+        "paraphrase": {
+          "role": "paraphrase",
+          "question": "All rugs are hunters. All architects are hunters. Therefore, some rugs are architects.",
+          "oracle": "I"
+        },
+        "negation": {
+          "role": "negation",
+          "question": "Is it NOT the case that some farmers are plumbers?",
+          "oracle": "FLIPPED"
+        },
+        "contrapositive": {
+          "role": "contrapositive",
+          "question": "Is the following claim also true: some farmers are plumbers?",
+          "oracle": "I"
+        }
+      },
+      "answers": {
+        "seed": "I",
+        "paraphrase": "I",
+        "negation": "FLIPPED",
+        "contrapositive": "I"
+      },
+      "relations": {
+        "paraphrase_eq_seed": true,
+        "negation_eq_not_seed": true,
+        "contrapositive_eq_seed": true
+      }
+    },
+    {
+      "cluster_id": "arith_0001",
+      "domain": "arithmetic",
+      "template_id": "AS12",
+      "difficulty_hint": "hard",
+      "oracle_correct": "36",
+      "variants": {
+        "seed": {
+          "role": "seed",
+          "question": "Each bag holds 12 beads. Brian buys 3 bags. How many beads does Brian have in total?",
+          "oracle": "36"
+        },
+        "paraphrase": {
+          "role": "paraphrase",
+          "question": "Each bag holds 12 marbles of glass. Jada buys 3 bags. How many marbles of glass does Jada have in total?",
+          "oracle": "36"
+        },
+        "negation": {
+          "role": "negation",
+          "question": "Consider: Each bag holds 12 beads. Brian buys 3 bags. How many beads does Brian have in total? Is the answer to this problem equal to 37? Answer YES or NO only.",
+          "oracle": "NO"
+        },
+        "inverse": {
+          "role": "inverse",
+          "question": "(Inverse) Consider a problem with the same setup as: 'Each bag holds 12 beads. Brian buys 3 bags. How many beads does Brian have in total?'. What was the original starting quantity (the first number mentioned)?",
+          "oracle": "12"
+        }
+      },
+      "answers": {
+        "seed": "36",
+        "paraphrase": "36",
+        "negation": "NO",
+        "inverse": "12"
+      },
+      "relations": {
+        "paraphrase_eq_seed": true,
+        "negation_eq_no": true,
+        "inverse_distinct": true
+      }
+    },
+    {
+      "cluster_id": "arith_0009",
+      "domain": "arithmetic",
+      "template_id": "AS12",
+      "difficulty_hint": "hard",
+      "oracle_correct": "81",
+      "variants": {
+        "seed": {
+          "role": "seed",
+          "question": "Each bag holds 9 acorns. Keiko buys 9 bags. How many acorns does Keiko have in total?",
+          "oracle": "81"
+        },
+        "paraphrase": {
+          "role": "paraphrase",
+          "question": "Each bag holds 9 tiny skulls. Selma buys 9 bags. How many tiny skulls does Selma have in total?",
+          "oracle": "81"
+        },
+        "negation": {
+          "role": "negation",
+          "question": "Consider: Each bag holds 9 acorns. Keiko buys 9 bags. How many acorns does Keiko have in total? Is the answer to this problem equal to 82? Answer YES or NO only.",
+          "oracle": "NO"
+        },
+        "inverse": {
+          "role": "inverse",
+          "question": "(Inverse) Consider a problem with the same setup as: 'Each bag holds 9 acorns. Keiko buys 9 bags. How many acorns does Keiko have in total?'. What was the original starting quantity (the first number mentioned)?",
+          "oracle": "9"
+        }
+      },
+      "answers": {
+        "seed": "81",
+        "paraphrase": "81",
+        "negation": "NO",
+        "inverse": "9"
+      },
+      "relations": {
+        "paraphrase_eq_seed": true,
+        "negation_eq_no": true,
+        "inverse_distinct": true
+      }
+    },
+    {
+      "cluster_id": "logic_0007",
+      "domain": "logic",
+      "template_id": "T12",
+      "difficulty_hint": "medium",
+      "oracle_correct": "V",
+      "variants": {
+        "seed": {
+          "role": "seed",
+          "question": "All astronauts are fruits. All musicians are not fruits. Therefore, no astronauts are musicians.",
+          "oracle": "V"
+        },
+        "paraphrase": {
+          "role": "paraphrase",
+          "question": "All fossils are journalists. All lanterns are not journalists. Therefore, no fossils are lanterns.",
+          "oracle": "V"
+        },
+        "negation": {
+          "role": "negation",
+          "question": "Is it NOT the case that no astronauts are musicians?",
+          "oracle": "FLIPPED"
+        },
+        "contrapositive": {
+          "role": "contrapositive",
+          "question": "Is the following claim also true: no astronauts are musicians?",
+          "oracle": "V"
+        }
+      },
+      "answers": {
+        "seed": "V",
+        "paraphrase": "V",
+        "negation": "FLIPPED",
+        "contrapositive": "V"
+      },
+      "relations": {
+        "paraphrase_eq_seed": true,
+        "negation_eq_not_seed": true,
+        "contrapositive_eq_seed": true
+      }
+    },
+    {
+      "cluster_id": "arith_0003",
+      "domain": "arithmetic",
+      "template_id": "AS5",
+      "difficulty_hint": "medium",
+      "oracle_correct": "15",
+      "variants": {
+        "seed": {
+          "role": "seed",
+          "question": "Rosa is 6 years old. Selma is 9 years older than Rosa. How old is Selma?",
+          "oracle": "15"
+        },
+        "paraphrase": {
+          "role": "paraphrase",
+          "question": "Yusuf is 6 years old. Sami is 9 years older than Yusuf. How old is Sami?",
+          "oracle": "15"
+        },
+        "negation": {
+          "role": "negation",
+          "question": "Consider: Rosa is 6 years old. Selma is 9 years older than Rosa. How old is Selma? Is the answer to this problem equal to 16? Answer YES or NO only.",
+          "oracle": "NO"
+        },
+        "inverse": {
+          "role": "inverse",
+          "question": "(Inverse) Consider a problem with the same setup as: 'Rosa is 6 years old. Selma is 9 years older than Rosa. How old is Selma?'. What was the original starting quantity (the first number mentioned)?",
+          "oracle": "6"
+        }
+      },
+      "answers": {
+        "seed": "15",
+        "paraphrase": "15",
+        "negation": "NO",
+        "inverse": "6"
+      },
+      "relations": {
+        "paraphrase_eq_seed": true,
+        "negation_eq_no": true,
+        "inverse_distinct": true
+      }
+    },
+    {
+      "cluster_id": "arith_0011",
+      "domain": "arithmetic",
+      "template_id": "AS2",
+      "difficulty_hint": "easy",
+      "oracle_correct": "9",
+      "variants": {
+        "seed": {
+          "role": "seed",
+          "question": "Vince has 18 stickers. Vince gives Quincy 9. How many stickers does Vince have left?",
+          "oracle": "9"
+        },
+        "paraphrase": {
+          "role": "paraphrase",
+          "question": "Selma has 18 tiny lamps. Selma gives Esme 9. How many tiny lamps does Selma have left?",
+          "oracle": "9"
+        },
+        "negation": {
+          "role": "negation",
+          "question": "Consider: Vince has 18 stickers. Vince gives Quincy 9. How many stickers does Vince have left? Is the answer to this problem equal to 10? Answer YES or NO only.",
+          "oracle": "NO"
+        },
+        "inverse": {
+          "role": "inverse",
+          "question": "(Inverse) Consider a problem with the same setup as: 'Vince has 18 stickers. Vince gives Quincy 9. How many stickers does Vince have left?'. What was the original starting quantity (the first number mentioned)?",
+          "oracle": "18"
+        }
+      },
+      "answers": {
+        "seed": "9",
+        "paraphrase": "9",
+        "negation": "NO",
+        "inverse": "18"
+      },
+      "relations": {
+        "paraphrase_eq_seed": true,
+        "negation_eq_no": true,
+        "inverse_distinct": true
+      }
+    },
+    {
+      "cluster_id": "arith_0006",
+      "domain": "arithmetic",
+      "template_id": "AS6",
+      "difficulty_hint": "medium",
+      "oracle_correct": "12",
+      "variants": {
+        "seed": {
+          "role": "seed",
+          "question": "Alice buys 7 buttons at $1 each. Alice pays with a $19 bill. How much change does Alice receive?",
+          "oracle": "12"
+        },
+        "paraphrase": {
+          "role": "paraphrase",
+          "question": "Quincy buys 7 souvenir spoons at $1 each. Quincy pays with a $19 bill. How much change does Quincy receive?",
+          "oracle": "12"
+        },
+        "negation": {
+          "role": "negation",
+          "question": "Consider: Alice buys 7 buttons at $1 each. Alice pays with a $19 bill. How much change does Alice receive? Is the answer to this problem equal to 13? Answer YES or NO only.",
+          "oracle": "NO"
+        },
+        "inverse": {
+          "role": "inverse",
+          "question": "(Inverse) Consider a problem with the same setup as: 'Alice buys 7 buttons at $1 each. Alice pays with a $19 bill. How much change does Alice receive?'. What was the original starting quantity (the first number mentioned)?",
+          "oracle": "7"
+        }
+      },
+      "answers": {
+        "seed": "12",
+        "paraphrase": "12",
+        "negation": "NO",
+        "inverse": "7"
+      },
+      "relations": {
+        "paraphrase_eq_seed": true,
+        "negation_eq_no": true,
+        "inverse_distinct": true
+      }
+    }
+  ],
+  "published_accuracy": {
+    "openai/gpt-4o-mini": {
+      "mmlu": 0.82,
+      "helm": 0.79
+    },
+    "anthropic/claude-haiku-4.5": {
+      "mmlu": 0.801,
+      "helm": 0.78
+    },
+    "meta-llama/llama-3.1-8b-instruct": {
+      "mmlu": 0.684,
+      "helm": 0.65
+    },
+    "qwen/qwen-2.5-7b-instruct": {
+      "mmlu": 0.707,
+      "helm": 0.69
+    },
+    "mistralai/mistral-small-24b-instruct-2501": {
+      "mmlu": 0.732,
+      "helm": 0.71
+    }
+  }
+}
