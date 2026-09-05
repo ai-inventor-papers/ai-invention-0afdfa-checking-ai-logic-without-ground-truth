@@ -1,0 +1,64 @@
+{
+  "metadata": {
+    "method_name": "M-IRT (Metamorphic Item Response Theory) \u2014 schema-conformant view",
+    "description": "Each example corresponds to one Metamorphic Item Cluster. predict_mirt_our_method emits the GRM-estimated latent ability for the strongest model; predict_static_baseline emits the seed-only accuracy for the strongest model. Per-item discrimination and difficulty thresholds are exposed via metadata fields.",
+    "n_clusters": 100,
+    "n_logic": 50,
+    "n_arithmetic": 50
+  },
+  "datasets": [
+    {
+      "dataset": "m_irt_metamorphic_clusters",
+      "examples": [
+        {
+          "input": "Wren is 12 years old. Daria is 12 years older than Wren. How old is Daria?",
+          "output": "24",
+          "metadata_cluster_id": "arith_0002",
+          "metadata_domain": "arithmetic",
+          "metadata_template": "AS5",
+          "metadata_difficulty": "medium",
+          "metadata_thetas_per_model": "{\"openai/gpt-4o-mini\": 3.687386271500021, \"anthropic/claude-haiku-4.5\": 3.561223...",
+          "metadata_static_acc_per_model": "{\"openai/gpt-4o-mini\": 0.89, \"anthropic/claude-haiku-4.5\": 0.9, \"meta-llama/llam...",
+          "metadata_validation_a": "{\"r_mmlu\": 0.9746310948142867, \"r_helm\": 0.9764637262307078, \"ci_mmlu\": [0.59341...",
+          "metadata_validation_b": "{\"target_model\": \"qwen/qwen-2.5-7b-instruct\", \"contamination_fraction\": 0.3, \"pe...",
+          "metadata_item_discrimination": "0.2000034181083939",
+          "metadata_item_difficulty_thresholds": "[6.0, nan]",
+          "predict_mirt_our_method": "theta[openai/gpt-4o-mini]=+3.687",
+          "predict_static_baseline": "acc[anthropic/claude-haiku-4.5]=0.900"
+        },
+        {
+          "input": "Vince has 11 cookies. Caleb has 13 cookies. How many cookies do they have togeth...",
+          "output": "24",
+          "metadata_cluster_id": "arith_0021",
+          "metadata_domain": "arithmetic",
+          "metadata_template": "AS3",
+          "metadata_difficulty": "medium",
+          "metadata_thetas_per_model": "{\"openai/gpt-4o-mini\": 3.687386271500021, \"anthropic/claude-haiku-4.5\": 3.561223...",
+          "metadata_static_acc_per_model": "{\"openai/gpt-4o-mini\": 0.89, \"anthropic/claude-haiku-4.5\": 0.9, \"meta-llama/llam...",
+          "metadata_validation_a": "{\"r_mmlu\": 0.9746310948142867, \"r_helm\": 0.9764637262307078, \"ci_mmlu\": [0.59341...",
+          "metadata_validation_b": "{\"target_model\": \"qwen/qwen-2.5-7b-instruct\", \"contamination_fraction\": 0.3, \"pe...",
+          "metadata_item_discrimination": "0.2000034181083939",
+          "metadata_item_difficulty_thresholds": "[6.0, nan]",
+          "predict_mirt_our_method": "theta[openai/gpt-4o-mini]=+3.687",
+          "predict_static_baseline": "acc[anthropic/claude-haiku-4.5]=0.900"
+        },
+        {
+          "input": "Tomas is 12 years old. Owen is 17 years older than Tomas. How old is Owen?",
+          "output": "29",
+          "metadata_cluster_id": "arith_0049",
+          "metadata_domain": "arithmetic",
+          "metadata_template": "AS5",
+          "metadata_difficulty": "hard",
+          "metadata_thetas_per_model": "{\"openai/gpt-4o-mini\": 3.687386271500021, \"anthropic/claude-haiku-4.5\": 3.561223...",
+          "metadata_static_acc_per_model": "{\"openai/gpt-4o-mini\": 0.89, \"anthropic/claude-haiku-4.5\": 0.9, \"meta-llama/llam...",
+          "metadata_validation_a": "{\"r_mmlu\": 0.9746310948142867, \"r_helm\": 0.9764637262307078, \"ci_mmlu\": [0.59341...",
+          "metadata_validation_b": "{\"target_model\": \"qwen/qwen-2.5-7b-instruct\", \"contamination_fraction\": 0.3, \"pe...",
+          "metadata_item_discrimination": "0.2000034181083939",
+          "metadata_item_difficulty_thresholds": "[6.0, nan]",
+          "predict_mirt_our_method": "theta[openai/gpt-4o-mini]=+3.687",
+          "predict_static_baseline": "acc[anthropic/claude-haiku-4.5]=0.900"
+        }
+      ]
+    }
+  ]
+}

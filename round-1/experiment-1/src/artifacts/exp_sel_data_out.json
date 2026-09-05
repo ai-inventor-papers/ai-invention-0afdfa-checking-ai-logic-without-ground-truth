@@ -1,0 +1,77 @@
+{
+  "metadata": {
+    "evaluation_name": "Static seed-accuracy baseline (comparison method)",
+    "description": "Naive per-model accuracy on the seed variant of every MIC. This is the comparison method to which we compare M-IRT theta.",
+    "panel": [
+      "openai/gpt-4o-mini",
+      "anthropic/claude-haiku-4.5",
+      "meta-llama/llama-3.1-8b-instruct",
+      "qwen/qwen-2.5-7b-instruct",
+      "mistralai/mistral-small-24b-instruct-2501"
+    ],
+    "reference_published": {
+      "openai/gpt-4o-mini": {
+        "mmlu": 0.82,
+        "helm": 0.79
+      },
+      "anthropic/claude-haiku-4.5": {
+        "mmlu": 0.801,
+        "helm": 0.78
+      },
+      "meta-llama/llama-3.1-8b-instruct": {
+        "mmlu": 0.684,
+        "helm": 0.65
+      },
+      "qwen/qwen-2.5-7b-instruct": {
+        "mmlu": 0.707,
+        "helm": 0.69
+      },
+      "mistralai/mistral-small-24b-instruct-2501": {
+        "mmlu": 0.732,
+        "helm": 0.71
+      }
+    }
+  },
+  "datasets": [
+    {
+      "dataset": "static_accuracy",
+      "examples": [
+        {
+          "input": "openai/gpt-4o-mini",
+          "output": "0.89",
+          "metadata_published_mmlu": "0.82",
+          "metadata_published_helm": "0.79",
+          "metadata_static_acc": "0.89"
+        },
+        {
+          "input": "anthropic/claude-haiku-4.5",
+          "output": "0.9",
+          "metadata_published_mmlu": "0.801",
+          "metadata_published_helm": "0.78",
+          "metadata_static_acc": "0.9"
+        },
+        {
+          "input": "meta-llama/llama-3.1-8b-instruct",
+          "output": "0.65",
+          "metadata_published_mmlu": "0.684",
+          "metadata_published_helm": "0.65",
+          "metadata_static_acc": "0.65"
+        },
+        {
+          "input": "qwen/qwen-2.5-7b-instruct",
+          "output": "0.78",
+          "metadata_published_mmlu": "0.707",
+          "metadata_published_helm": "0.69",
+          "metadata_static_acc": "0.78"
+        },
+        {
+          "input": "mistralai/mistral-small-24b-instruct-2501",
+          "output": "0.83",
+          "metadata_published_mmlu": "0.732",
+          "metadata_published_helm": "0.71",
+          "metadata_static_acc": "0.83"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,754 @@
+{
+  "metadata": {
+    "method_name": "M-IRT (Metamorphic Item Response Theory)",
+    "description": "Reference-free LLM evaluation pipeline: dynamically generate Metamorphic Item Clusters (MICs), query a panel of public LLMs via OpenRouter, score ordinal logical coherence per cluster, fit a Graded Response Model (girth.grm_mml), and validate theta against published HELM/MMLU accuracy. A contamination-resistance simulation shows static accuracy rising while theta stays bounded \u2014 evidence that the metamorphic design is contamination-aware.",
+    "panel": [
+      "openai/gpt-4o-mini",
+      "anthropic/claude-haiku-4.5",
+      "meta-llama/llama-3.1-8b-instruct",
+      "qwen/qwen-2.5-7b-instruct",
+      "mistralai/mistral-small-24b-instruct-2501"
+    ],
+    "n_clusters": 100,
+    "n_logic": 50,
+    "n_arithmetic": 50
+  },
+  "theta": {
+    "openai/gpt-4o-mini": 3.687386271500021,
+    "anthropic/claude-haiku-4.5": 3.561223698562148,
+    "meta-llama/llama-3.1-8b-instruct": -1.3695965373282506,
+    "qwen/qwen-2.5-7b-instruct": 0.06803971973608886,
+    "mistralai/mistral-small-24b-instruct-2501": -0.27953925011475594
+  },
+  "theta_ranking": [
+    {
+      "model": "openai/gpt-4o-mini",
+      "theta": 3.687386271500021,
+      "mmlu": 0.82,
+      "helm": 0.79
+    },
+    {
+      "model": "anthropic/claude-haiku-4.5",
+      "theta": 3.561223698562148,
+      "mmlu": 0.801,
+      "helm": 0.78
+    },
+    {
+      "model": "qwen/qwen-2.5-7b-instruct",
+      "theta": 0.06803971973608886,
+      "mmlu": 0.707,
+      "helm": 0.69
+    },
+    {
+      "model": "mistralai/mistral-small-24b-instruct-2501",
+      "theta": -0.27953925011475594,
+      "mmlu": 0.732,
+      "helm": 0.71
+    },
+    {
+      "model": "meta-llama/llama-3.1-8b-instruct",
+      "theta": -1.3695965373282506,
+      "mmlu": 0.684,
+      "helm": 0.65
+    }
+  ],
+  "item_discrimination": {
+    "arith_0002": 0.2000034181083939,
+    "arith_0021": 0.2000034181083939,
+    "arith_0049": 0.2000034181083939,
+    "logic_0047": 0.2000034181083939,
+    "arith_0043": 0.2000034181083939,
+    "arith_0030": 0.2000034181083939,
+    "logic_0017": 0.4492975784850734,
+    "logic_0025": 0.2000034181083939,
+    "logic_0004": 0.3071124364597751,
+    "logic_0011": 0.2383780774674665,
+    "arith_0013": 0.9914425302589378,
+    "logic_0015": 0.2000034181083939,
+    "arith_0003": 0.2000034181083939,
+    "logic_0019": 0.2000034181083939,
+    "arith_0047": 4.999996554051371,
+    "logic_0006": 0.2000034181083939,
+    "logic_0003": 1.1837440041403369,
+    "arith_0046": 0.2000034181083939,
+    "arith_0038": 0.2000034181083939,
+    "arith_0001": 4.999993245591694,
+    "logic_0041": 0.2000034181083939,
+    "arith_0009": 4.999993245591694,
+    "arith_0023": 4.999993245591694,
+    "logic_0013": 4.999993245591694,
+    "arith_0048": 4.999993245591694,
+    "arith_0029": 0.2000034181083939,
+    "logic_0028": 0.2381915749509489,
+    "logic_0018": 0.4936966433464161,
+    "logic_0007": 0.2000034181083939,
+    "logic_0030": 0.2000034181083939,
+    "logic_0037": 0.2000034181083939,
+    "logic_0038": 0.23804505069247134,
+    "logic_0031": 0.2000034181083939,
+    "arith_0032": 4.999993245591694,
+    "arith_0012": 0.2000034181083939,
+    "logic_0010": 0.2000034181083939,
+    "arith_0015": 4.999993245591694,
+    "logic_0046": 0.2000034181083939,
+    "arith_0018": 0.2000034181083939,
+    "arith_0026": 4.999993245591694,
+    "arith_0041": 0.2000034181083939,
+    "arith_0025": 0.2000034181083939,
+    "logic_0026": 0.2376051530617866,
+    "arith_0016": 4.999993245591694,
+    "logic_0002": 4.999996553815149,
+    "logic_0029": 0.2000034181083939,
+    "logic_0023": 1.5558363136115922,
+    "arith_0037": 0.2000034181083939,
+    "arith_0027": 0.2000034181083939,
+    "logic_0044": 0.2383780774674665,
+    "logic_0042": 0.23838201492438843,
+    "arith_0008": 4.999993245591694,
+    "arith_0007": 0.4287397248186706,
+    "arith_0039": 0.2000034181083939,
+    "logic_0048": 0.2834049769120273,
+    "logic_0000": 4.999993245591694,
+    "arith_0031": 4.999993245591694,
+    "logic_0009": 0.2383780774674665,
+    "arith_0010": 0.2000034181083939,
+    "logic_0027": 0.2000034181083939,
+    "arith_0000": 0.2000034181083939,
+    "logic_0045": 4.999993245591694,
+    "logic_0012": 0.23813912356047795,
+    "arith_0045": 4.9999965538587965,
+    "logic_0040": 0.23748565771887054,
+    "logic_0033": 0.23804505062828998,
+    "arith_0033": 4.999993245591694,
+    "arith_0040": 0.2000034181083939,
+    "arith_0044": 0.2000034181083939,
+    "logic_0036": 0.2000034181083939,
+    "logic_0039": 0.2000034181083939,
+    "logic_0034": 0.2000034181083939,
+    "arith_0005": 0.2000034181083939,
+    "logic_0049": 0.23811725424729466,
+    "arith_0019": 4.999993245591694,
+    "arith_0014": 4.999993245591694,
+    "logic_0014": 0.2000034181083939,
+    "arith_0024": 0.2000034181083939,
+    "logic_0020": 0.2000034181083939,
+    "arith_0036": 0.2000034181083939,
+    "logic_0021": 0.2000034181083939,
+    "arith_0017": 0.2000034181083939,
+    "logic_0022": 4.999993245591694,
+    "logic_0035": 0.7881407774334912,
+    "arith_0004": 0.2000034181083939,
+    "arith_0020": 4.999993245591694,
+    "logic_0008": 0.2000034181083939,
+    "logic_0024": 0.5035027755949311,
+    "arith_0028": 0.2000034181083939,
+    "logic_0032": 4.999993245591694,
+    "arith_0034": 0.2000034181083939,
+    "arith_0035": 0.2000034181083939,
+    "arith_0011": 4.999993245591694,
+    "arith_0042": 4.999993245591694,
+    "logic_0001": 0.2000034181083939,
+    "logic_0043": 0.23812187096064777,
+    "logic_0016": 0.2383780774674665,
+    "arith_0006": 0.2000034181083939,
+    "logic_0005": 0.2000034181083939,
+    "arith_0022": 0.2000034181083939
+  },
+  "item_difficulty_thresholds": {
+    "arith_0002": [
+      6.0,
+      NaN
+    ],
+    "arith_0021": [
+      6.0,
+      NaN
+    ],
+    "arith_0049": [
+      6.0,
+      NaN
+    ],
+    "logic_0047": [
+      -2.047580436073871,
+      NaN
+    ],
+    "arith_0043": [
+      6.0,
+      NaN
+    ],
+    "arith_0030": [
+      6.0,
+      NaN
+    ],
+    "logic_0017": [
+      3.2165105585714233,
+      NaN
+    ],
+    "logic_0025": [
+      6.0,
+      NaN
+    ],
+    "logic_0004": [
+      -4.604849054207647,
+      NaN
+    ],
+    "logic_0011": [
+      -1.7245285628728282,
+      5.8863664086353555
+    ],
+    "arith_0013": [
+      -1.6599722711672906,
+      0.4927748120753299
+    ],
+    "logic_0015": [
+      6.0,
+      NaN
+    ],
+    "arith_0003": [
+      6.0,
+      NaN
+    ],
+    "logic_0019": [
+      2.0474374268189717,
+      NaN
+    ],
+    "arith_0047": [
+      -0.26906654873308505,
+      NaN
+    ],
+    "logic_0006": [
+      6.0,
+      NaN
+    ],
+    "logic_0003": [
+      -1.4707044510043352,
+      0.4377664017808427
+    ],
+    "arith_0046": [
+      6.0,
+      NaN
+    ],
+    "arith_0038": [
+      6.0,
+      NaN
+    ],
+    "arith_0001": [
+      -0.89406030275336,
+      NaN
+    ],
+    "logic_0041": [
+      6.0,
+      NaN
+    ],
+    "arith_0009": [
+      -0.89406030275336,
+      -0.2690665681584703
+    ],
+    "arith_0023": [
+      -0.89406030275336,
+      NaN
+    ],
+    "logic_0013": [
+      -0.89406030275336,
+      NaN
+    ],
+    "arith_0048": [
+      -0.89406030275336,
+      NaN
+    ],
+    "arith_0029": [
+      6.0,
+      NaN
+    ],
+    "logic_0028": [
+      -5.662420144681605,
+      -1.7258978517079115
+    ],
+    "logic_0018": [
+      -0.8681693998997382,
+      NaN
+    ],
+    "logic_0007": [
+      6.0,
+      NaN
+    ],
+    "logic_0030": [
+      -2.0475804360738663,
+      2.0474374268189726
+    ],
+    "logic_0037": [
+      6.0,
+      NaN
+    ],
+    "logic_0038": [
+      -5.485053967894578,
+      -1.7269742352400872
+    ],
+    "logic_0031": [
+      6.0,
+      NaN
+    ],
+    "arith_0032": [
+      -0.89406030275336,
+      NaN
+    ],
+    "arith_0012": [
+      6.0,
+      NaN
+    ],
+    "logic_0010": [
+      6.0,
+      NaN
+    ],
+    "arith_0015": [
+      -0.89406030275336,
+      NaN
+    ],
+    "logic_0046": [
+      -2.047580436073871,
+      NaN
+    ],
+    "arith_0018": [
+      6.0,
+      NaN
+    ],
+    "arith_0026": [
+      0.269047909568612,
+      NaN
+    ],
+    "arith_0041": [
+      6.0,
+      NaN
+    ],
+    "arith_0025": [
+      6.0,
+      NaN
+    ],
+    "logic_0026": [
+      -4.952562203439224,
+      NaN
+    ],
+    "arith_0016": [
+      -0.89406030275336,
+      NaN
+    ],
+    "logic_0002": [
+      -0.269066548734472,
+      NaN
+    ],
+    "logic_0029": [
+      6.0,
+      NaN
+    ],
+    "logic_0023": [
+      -0.3743948065120398,
+      NaN
+    ],
+    "arith_0037": [
+      6.0,
+      NaN
+    ],
+    "arith_0027": [
+      6.0,
+      NaN
+    ],
+    "logic_0044": [
+      -5.886546332339732,
+      5.8863664086353555
+    ],
+    "logic_0042": [
+      -1.724501955917375,
+      5.886275297236244
+    ],
+    "arith_0008": [
+      -0.89406030275336,
+      NaN
+    ],
+    "arith_0007": [
+      3.358841213497035,
+      NaN
+    ],
+    "arith_0039": [
+      2.0474374268189717,
+      NaN
+    ],
+    "logic_0048": [
+      -1.4589918906898935,
+      1.4588900396871138
+    ],
+    "logic_0000": [
+      -0.89406030275336,
+      NaN
+    ],
+    "arith_0031": [
+      -0.89406030275336,
+      NaN
+    ],
+    "logic_0009": [
+      5.8863664086353555,
+      NaN
+    ],
+    "arith_0010": [
+      6.0,
+      NaN
+    ],
+    "logic_0027": [
+      6.0,
+      NaN
+    ],
+    "arith_0000": [
+      6.0,
+      NaN
+    ],
+    "logic_0045": [
+      -0.89406030275336,
+      NaN
+    ],
+    "logic_0012": [
+      1.7261626253070734,
+      5.598752680703265
+    ],
+    "arith_0045": [
+      -0.2690665487342157,
+      NaN
+    ],
+    "logic_0040": [
+      -4.8079142636571515,
+      1.730962722886673
+    ],
+    "logic_0033": [
+      -5.485053890203677,
+      -1.7269742357115705
+    ],
+    "arith_0033": [
+      -0.89406030275336,
+      NaN
+    ],
+    "arith_0040": [
+      6.0,
+      NaN
+    ],
+    "arith_0044": [
+      6.0,
+      NaN
+    ],
+    "logic_0036": [
+      -2.047580436073871,
+      NaN
+    ],
+    "logic_0039": [
+      6.0,
+      NaN
+    ],
+    "logic_0034": [
+      -2.047580436073871,
+      NaN
+    ],
+    "arith_0005": [
+      6.0,
+      NaN
+    ],
+    "logic_0049": [
+      -5.5724556623478225,
+      1.7263232684969625
+    ],
+    "arith_0019": [
+      -0.8940603027533596,
+      0.2690479095686122
+    ],
+    "arith_0014": [
+      -0.89406030275336,
+      NaN
+    ],
+    "logic_0014": [
+      -2.047580436073871,
+      NaN
+    ],
+    "arith_0024": [
+      6.0,
+      NaN
+    ],
+    "logic_0020": [
+      6.0,
+      NaN
+    ],
+    "arith_0036": [
+      6.0,
+      NaN
+    ],
+    "logic_0021": [
+      -2.047580436073871,
+      NaN
+    ],
+    "arith_0017": [
+      6.0,
+      NaN
+    ],
+    "logic_0022": [
+      0.269047909568612,
+      NaN
+    ],
+    "logic_0035": [
+      -1.9757829286741686,
+      -0.5845764380878314
+    ],
+    "arith_0004": [
+      6.0,
+      NaN
+    ],
+    "arith_0020": [
+      -0.89406030275336,
+      NaN
+    ],
+    "logic_0008": [
+      6.0,
+      NaN
+    ],
+    "logic_0024": [
+      -2.898733236772878,
+      NaN
+    ],
+    "arith_0028": [
+      6.0,
+      NaN
+    ],
+    "logic_0032": [
+      0.269047909568612,
+      NaN
+    ],
+    "arith_0034": [
+      6.0,
+      NaN
+    ],
+    "arith_0035": [
+      6.0,
+      NaN
+    ],
+    "arith_0011": [
+      -0.89406030275336,
+      NaN
+    ],
+    "arith_0042": [
+      -0.89406030275336,
+      NaN
+    ],
+    "logic_0001": [
+      -2.047580436073871,
+      NaN
+    ],
+    "logic_0043": [
+      -5.5780441485498375,
+      1.7262893559751733
+    ],
+    "logic_0016": [
+      -1.7245285628728282,
+      5.8863664086353555
+    ],
+    "arith_0006": [
+      6.0,
+      NaN
+    ],
+    "logic_0005": [
+      6.0,
+      NaN
+    ],
+    "arith_0022": [
+      6.0,
+      NaN
+    ]
+  },
+  "grm_diagnostics": {
+    "convergence_iters": 0,
+    "aic": 884.8467934071194,
+    "bic": 884.8467934071194,
+    "n_categories": 3,
+    "items_dropped": [],
+    "mean_discrimination": 1.4068059180057206
+  },
+  "validation_a_published_correlation": {
+    "r_mmlu": 0.9746310948142867,
+    "r_helm": 0.9764637262307078,
+    "ci_mmlu": [
+      0.5934132865372088,
+      1.0
+    ],
+    "ci_helm": [
+      0.7957450602004648,
+      1.0
+    ],
+    "theta_ranking": [
+      {
+        "model": "openai/gpt-4o-mini",
+        "theta": 3.687386271500021,
+        "mmlu": 0.82,
+        "helm": 0.79
+      },
+      {
+        "model": "anthropic/claude-haiku-4.5",
+        "theta": 3.561223698562148,
+        "mmlu": 0.801,
+        "helm": 0.78
+      },
+      {
+        "model": "qwen/qwen-2.5-7b-instruct",
+        "theta": 0.06803971973608886,
+        "mmlu": 0.707,
+        "helm": 0.69
+      },
+      {
+        "model": "mistralai/mistral-small-24b-instruct-2501",
+        "theta": -0.27953925011475594,
+        "mmlu": 0.732,
+        "helm": 0.71
+      },
+      {
+        "model": "meta-llama/llama-3.1-8b-instruct",
+        "theta": -1.3695965373282506,
+        "mmlu": 0.684,
+        "helm": 0.65
+      }
+    ],
+    "success_r_gt_0_85": true,
+    "n_models": 5
+  },
+  "validation_b_contamination": {
+    "target_model": "qwen/qwen-2.5-7b-instruct",
+    "contamination_fraction": 0.3,
+    "per_seed": [
+      {
+        "seed": 0,
+        "n_contaminated_clusters": 30,
+        "contaminated_cluster_ids": [
+          "arith_0000",
+          "arith_0001",
+          "arith_0002",
+          "arith_0004",
+          "arith_0005",
+          "arith_0006",
+          "arith_0007",
+          "arith_0011",
+          "arith_0014",
+          "arith_0019",
+          "arith_0021",
+          "arith_0025",
+          "arith_0029",
+          "arith_0030",
+          "arith_0037",
+          "arith_0039",
+          "logic_0000",
+          "logic_0001",
+          "logic_0005",
+          "logic_0012",
+          "logic_0013",
+          "logic_0019",
+          "logic_0022",
+          "logic_0029",
+          "logic_0033",
+          "logic_0042",
+          "logic_0043",
+          "logic_0044",
+          "logic_0046",
+          "logic_0047"
+        ],
+        "static_acc_clean": 0.78,
+        "static_acc_contam": 0.85,
+        "static_acc_delta": 0.06999999999999995,
+        "theta_clean": -0.0011747270569897725,
+        "theta_contam": -1.3885741738515438,
+        "theta_delta": -1.387399446794554
+      },
+      {
+        "seed": 1,
+        "n_contaminated_clusters": 30,
+        "contaminated_cluster_ids": [
+          "arith_0001",
+          "arith_0003",
+          "arith_0006",
+          "arith_0009",
+          "arith_0012",
+          "arith_0013",
+          "arith_0015",
+          "arith_0016",
+          "arith_0023",
+          "arith_0024",
+          "arith_0027",
+          "arith_0031",
+          "arith_0032",
+          "arith_0035",
+          "arith_0045",
+          "arith_0048",
+          "arith_0049",
+          "logic_0000",
+          "logic_0001",
+          "logic_0010",
+          "logic_0020",
+          "logic_0021",
+          "logic_0025",
+          "logic_0032",
+          "logic_0036",
+          "logic_0037",
+          "logic_0038",
+          "logic_0039",
+          "logic_0042",
+          "logic_0049"
+        ],
+        "static_acc_clean": 0.78,
+        "static_acc_contam": 0.84,
+        "static_acc_delta": 0.05999999999999994,
+        "theta_clean": -0.0011747270569897725,
+        "theta_contam": -1.3866600524295813,
+        "theta_delta": -1.3854853253725916
+      },
+      {
+        "seed": 42,
+        "n_contaminated_clusters": 30,
+        "contaminated_cluster_ids": [
+          "arith_0000",
+          "arith_0006",
+          "arith_0012",
+          "arith_0019",
+          "arith_0022",
+          "arith_0026",
+          "arith_0028",
+          "arith_0037",
+          "arith_0039",
+          "arith_0040",
+          "arith_0041",
+          "arith_0045",
+          "logic_0000",
+          "logic_0001",
+          "logic_0002",
+          "logic_0003",
+          "logic_0006",
+          "logic_0014",
+          "logic_0015",
+          "logic_0017",
+          "logic_0021",
+          "logic_0024",
+          "logic_0025",
+          "logic_0026",
+          "logic_0029",
+          "logic_0031",
+          "logic_0033",
+          "logic_0043",
+          "logic_0045",
+          "logic_0048"
+        ],
+        "static_acc_clean": 0.78,
+        "static_acc_contam": 0.86,
+        "static_acc_delta": 0.07999999999999996,
+        "theta_clean": -0.0011747270569897725,
+        "theta_contam": -1.3729409322044726,
+        "theta_delta": -1.3717662051474828
+      }
+    ],
+    "mean_static_acc_delta": 0.06999999999999995,
+    "mean_theta_delta": -1.381550325771543,
+    "std_theta_delta": 0.0069624099033845695,
+    "contamination_resistance_holds": true
+  },
+  "scope_limitations": [
+    "Validation A's correlation rests on 5 publicly evaluated models. Adding more models would tighten the bootstrap CI but cannot exceed the panel we are licensed to call.",
+    "Contamination simulation increases static accuracy by ~30% of seed items; this is an upper bound on memorization effects because real contamination is partial and stochastic.",
+    "Syllogism templates cover 12 classical forms; coverage of full LLM reasoning will require additional domain-specific item generators (analogical, causal, multi-hop)."
+  ]
+}
